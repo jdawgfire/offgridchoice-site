@@ -1,1 +1,87 @@
-ECHO is on. 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Off-grid living resources and guides.">
+  <title>OffGridChoice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f3f3f3;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      padding-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #888;
+    }
+    .legal-links {
+      margin-top: 1rem;
+    }
+  </style>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VCDFZ2V35F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VCDFZ2V35F');
+  </script>
+
+</head>
+<body>
+  <header>
+    <h1>Welcome to OffGridChoice</h1>
+    <p>Your resource for modern off-grid living.</p>
+  </header>
+
+  <main>
+    <p>We’re building something great. Stay tuned for updates, guides, and real-world advice on going off the grid.</p>
+    <p><strong>Disclosure:</strong> Some links on this site may be affiliate links. As an Amazon Associate or participant in other programs, we may earn a small commission at no extra cost to you.</p>
+    <p><em>All content is AI-assisted and may be reviewed for factual accuracy.</em></p>
+  </main>
+
+  <footer>
+    <div class="legal-links">
+      <a href="/terms.html" target="_blank">Terms of Service</a> |
+      <a href="/privacy.html" target="_blank">Privacy Policy</a>
+    </div>
+    &copy; 2025 OffGridChoice. All rights reserved.
+  </footer>
+
+  <!-- Cookie Consent -->
+  <script>
+    if (!localStorage.getItem("cookieConsent")) {
+      const consent = document.createElement('div');
+      consent.style.position = 'fixed';
+      consent.style.bottom = '0';
+      consent.style.width = '100%';
+      consent.style.background = '#222';
+      consent.style.color = '#fff';
+      consent.style.padding = '1rem';
+      consent.style.textAlign = 'center';
+      consent.innerHTML = `
+        This site uses cookies and analytics tools to improve your experience.
+        <button style="margin-left:1rem;padding:0.3rem 1rem;" onclick="localStorage.setItem('cookieConsent', true); this.parentElement.remove();">OK</button>
+      `;
+      document.body.appendChild(consent);
+    }
+  </script>
+</body>
+</html>
