@@ -2,86 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Off-grid living resources and guides.">
-  <title>OffGridChoice</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 2rem;
-      background-color: #f3f3f3;
-      color: #333;
-    }
-    header {
-      text-align: center;
-      padding-bottom: 1rem;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      font-size: 1.2rem;
-    }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      text-align: center;
-      color: #888;
-    }
-    .legal-links {
-      margin-top: 1rem;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OffGridChoice - smart, modern off-grid living insights." />
+  <title>OffGridChoice | Off-Grid Living Made Simple</title>
+
+  <!-- Google Font for trust and clean readability -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VCDFZ2V35F"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-VCDFZ2V35F');
   </script>
 
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #0d3b25;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .disclosure, footer {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #0d3b25;
+      text-decoration: underline;
+      margin: 0 0.5rem;
+    }
+
+    .cta {
+      background-color: #e0f2ea;
+      padding: 1rem;
+      border-left: 5px solid #2e7d32;
+      margin: 2rem 0;
+    }
+
+    .cta h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+  </style>
 </head>
 <body>
+
   <header>
-    <h1>Welcome to OffGridChoice</h1>
-    <p>Your resource for modern off-grid living.</p>
+    <h1>OffGridChoice</h1>
+    <p>Smart Guides for Modern Off-Grid Living</p>
   </header>
 
   <main>
-    <p>We’re building something great. Stay tuned for updates, guides, and real-world advice on going off the grid.</p>
-    <p><strong>Disclosure:</strong> Some links on this site may be affiliate links. As an Amazon Associate or participant in other programs, we may earn a small commission at no extra cost to you.</p>
-    <p><em>All content is AI-assisted and may be reviewed for factual accuracy.</em></p>
+    <section>
+      <p>Welcome to <strong>OffGridChoice</strong>, your source for practical insights on off-grid living — from sustainable energy to shelter, food, and freedom from the modern grid.</p>
+
+      <div class="cta">
+        <h2>Coming Soon</h2>
+        <p>We're building a platform full of independent guides, affiliate-supported reviews, and real-world case studies to help you transition off the grid — or just live smarter within it.</p>
+      </div>
+
+      <p><strong>Affiliate Disclosure:</strong> This site may earn commissions from qualifying purchases. Our reviews remain objective and focused on value for off-grid users.</p>
+      <p><em>Note: Some content may be generated or enhanced using AI tools and reviewed for accuracy by humans.</em></p>
+    </section>
   </main>
 
   <footer>
-    <div class="legal-links">
+    <div class="legal">
       <a href="/terms.html" target="_blank">Terms of Service</a> |
       <a href="/privacy.html" target="_blank">Privacy Policy</a>
     </div>
-    &copy; 2025 OffGridChoice. All rights reserved.
+    <div class="disclosure">
+      &copy; 2025 OffGridChoice. All rights reserved.
+    </div>
   </footer>
 
   <!-- Cookie Consent -->
   <script>
     if (!localStorage.getItem("cookieConsent")) {
-      const consent = document.createElement('div');
-      consent.style.position = 'fixed';
-      consent.style.bottom = '0';
-      consent.style.width = '100%';
-      consent.style.background = '#222';
-      consent.style.color = '#fff';
-      consent.style.padding = '1rem';
-      consent.style.textAlign = 'center';
-      consent.innerHTML = `
+      const banner = document.createElement("div");
+      banner.style.position = "fixed";
+      banner.style.bottom = "0";
+      banner.style.left = "0";
+      banner.style.width = "100%";
+      banner.style.background = "#222";
+      banner.style.color = "#fff";
+      banner.style.padding = "1rem";
+      banner.style.textAlign = "center";
+      banner.innerHTML = `
         This site uses cookies and analytics tools to improve your experience.
-        <button style="margin-left:1rem;padding:0.3rem 1rem;" onclick="localStorage.setItem('cookieConsent', true); this.parentElement.remove();">OK</button>
+        <button style="margin-left:1rem; padding:0.3rem 1rem; cursor:pointer;" onclick="localStorage.setItem('cookieConsent', true); this.parentElement.remove();">OK</button>
       `;
-      document.body.appendChild(consent);
+      document.body.appendChild(banner);
     }
   </script>
+
 </body>
 </html>
