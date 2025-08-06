@@ -9,19 +9,16 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f4f1e6;
+      background-color: #e9f5e3;
       color: #2e2e2e;
     }
     header {
-      background-color: #4a5c47;
+      background-color: #355e3b;
       color: white;
-      padding: 1rem;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    nav {
-      position: relative;
     }
     nav ul {
       list-style: none;
@@ -30,33 +27,94 @@
       display: flex;
     }
     nav ul li {
-      margin-left: 1rem;
+      margin-left: 1.5rem;
       position: relative;
     }
-    nav ul li:hover ul {
-      display: block;
-    }
-    nav ul ul {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #4a5c47;
-      padding: 0.5rem 0;
-    }
-    nav ul ul li {
-      margin: 0;
-      padding: 0.5rem 1rem;
-    }
-    nav ul ul li a {
+    nav ul li a {
       color: white;
       text-decoration: none;
+      font-weight: bold;
     }
-    main {
-      padding: 2rem;
+    nav ul li a:hover {
+      text-decoration: underline;
     }
-    a {
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1581092580502-23f50d3bc589?ixlib=rb-4.0.3&auto=format&fit=crop&w=1650&q=80') center/cover no-repeat;
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .categories {
+      display: flex;
+      justify-content: space-around;
+      padding: 3rem 2rem;
+      background-color: #f4efe3;
+    }
+    .category {
+      text-align: center;
+      width: 30%;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #ffffff;
+    }
+    .category h3 {
+      color: #355e3b;
+    }
+    .category a {
+      text-decoration: none;
       color: #3b6f41;
+      font-weight: bold;
+    }
+    .recent-articles {
+      padding: 2rem;
+      background-color: #ffffff;
+    }
+    .recent-articles h3 {
+      color: #355e3b;
+      text-align: center;
+    }
+    .article-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .article-card {
+      width: 280px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #f9f9f9;
+    }
+    .article-card h4 {
+      margin-top: 0;
+    }
+    .article-card a {
+      color: #355e3b;
+      text-decoration: none;
+    }
+    .article-card a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      padding: 1.5rem;
+      background-color: #4a5c47;
+      color: white;
+      text-align: center;
+    }
+    footer a {
+      color: #cfcfcf;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -65,22 +123,62 @@
     <h1>OffGridChoice</h1>
     <nav>
       <ul>
-        <li>Product Categories
-          <ul>
-            <li><a href="solar.html">Solar Panels</a></li>
-            <li><a href="batteries.html">Batteries</a></li>
-            <li><a href="water.html">Water Purification</a></li>
-          </ul>
-        </li>
+        <li><a href="solar.html">Solar</a></li>
+        <li><a href="batteries.html">Batteries</a></li>
+        <li><a href="water.html">Water</a></li>
+        <li><a href="signals.html">Signals</a></li>
       </ul>
     </nav>
   </header>
-  <main>
-    <h2>Welcome to OffGridChoice</h2>
-    <p>Your one-stop source for curated reviews of the best off-grid gear to power your independent lifestyle. Whether you're living off the land or prepping for the unexpected, our research-backed recommendations help you make the right choice.</p>
-  </main>
-  <footer style="padding: 1rem; background-color: #ddd; text-align: center;">
-    <small>&copy; 2025 OffGridChoice. Affiliate links may earn us commission. All rights reserved.</small>
+
+  <div class="hero">
+    <h2>Empower Your Off-Grid Journey</h2>
+    <p>Uncover the best in solar, water, and battery systems — backed by real insights.</p>
+  </div>
+
+  <section class="categories">
+    <div class="category">
+      <h3>Solar Power</h3>
+      <p>Top solar panels and kits to harness the sun.</p>
+      <a href="solar.html">Explore Solar</a>
+    </div>
+    <div class="category">
+      <h3>Battery Systems</h3>
+      <p>Reliable battery storage options for all needs.</p>
+      <a href="batteries.html">Explore Batteries</a>
+    </div>
+    <div class="category">
+      <h3>Water Purification</h3>
+      <p>Clean and safe water wherever you are.</p>
+      <a href="water.html">Explore Water</a>
+    </div>
+  </section>
+
+  <section class="recent-articles">
+    <h3>Latest Articles</h3>
+    <div class="article-list">
+      <!-- Placeholder for article cards; replace with real articles dynamically or statically -->
+      <div class="article-card">
+        <h4><a href="#">How to Choose a Solar Kit in 2025</a></h4>
+        <p>A practical guide to selecting the right solar power system for off-grid life.</p>
+      </div>
+      <div class="article-card">
+        <h4><a href="#">Best Gravity Water Filters Ranked</a></h4>
+        <p>Compare the top gravity-fed water purifiers for durability, flow rate, and safety.</p>
+      </div>
+      <div class="article-card">
+        <h4><a href="#">12V Battery Bank Setup Tips</a></h4>
+        <p>Learn how to build, wire, and manage a safe 12V system for remote setups.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 OffGridChoice. All rights reserved.</p>
+    <p>
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="terms.html">Terms of Service</a>
+    </p>
   </footer>
 </body>
 </html>
