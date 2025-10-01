@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Debt Tracker & Payoff Simulator</title>
+<style>
+  :root{
+    --bg:#f5f6f4; --card:#ffffff; --ink:#143d2e; --muted:#476a5e; --accent:#2f7b58;
+    --warn:#b64136; --ok:#2f7b58; --edge:#e7ebe7;
+    --radius:14px; --shadow:0 6px 18px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{position:sticky;top:0;z-index:5;background:linear-gradient(#2f7b58,#245d44);color:#fff;padding:14px 18px}
+  header .wrap{display:flex;gap:16px;align-items:center;justify-content:space-between;max-width:1100px;margin:auto}
+  h1{font-size:20px;margin:0;font-weight:700;letter-spacing:.3px}
+  main{max-width:1100px;margin:20px auto;padding:0 18px 40px}
+  .grid{display:grid;gap:18px}
+  @media(min-width:980px){.grid{grid-template-columns: 340px 1fr}}
+  .card{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  .card h2{font-size:18px;margin:0 0 10px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  label{font-size:12px;color:var(--muted)}
+  input[type=text], input[type=number], input[type=date], select, textarea{
+    width:100%;padding:10px 12px;border:1px solid var(--edge);border-radius:10px;background:#fff;color:var(--ink)
+  }
+  input[type=number]{text-align:right}
+  .btn{appearance:none;border:0;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+  .btn.ghost{background:#eaf3ef;color:var(--accent)}
+  .btn.warn{background:var(--warn)}
+  .btn.small{padding:7px 10px;font-size:13px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;border-bottom:1px solid var(--edge);text-align:right}
+  th:first-child, td:first-child{text-align:left}
+  .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef6f2;color:var(--accent);font-size:12px}
+  .muted{color:var(--muted)}
+  .right{margin-left:auto}
+  .split{display:flex;gap:10px}
+  .split > *{flex:1}
+  .section-title{display:flex;align-items:center;gap:10px;margin:4px 0 12px}
+  details{border:1px dashed var(--edge);padding:10px;border-radius:10px;background:#fafbfa}
+  summary{cursor:pointer;font-weight:600}
+  .nowrap{white-space:nowrap}
+  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Debt Tracker & Payoff Simulator</h1>
+    <div class="row">
+      <button id="newSessionBtn" class="btn ghost small">New Session</button>
+      <select id="sessionSelect" title="Saved sessions"></select>
+      <button id="deleteSessionBtn" class="btn warn small" title="Delete current session">Delete</button>
+    </div>
+  </div>
+</header>
+
+<main class="grid">
+  <!-- Left: Setup / Actions -->
+  <section class="card">
+    <h2>1) Debts</h2>
+    <div class="row">
+      <input id="debtName" type="text" placeholder="Debt name (e.g., Visa 1234)" />
+    </div>
+    <div class="split">
+      <div><label>Starting Balance ($)</label><input id="debtBalance" type="number" min="0" step="0.01" /></div>
+      <div><label>APR (%)</label><input id="debtApr" type="number" min="0" step="0.01" /></div>
+      <div><label>Minimum / mo ($)</label><input id="debtMin" type="number" min="0" step="0.01" /></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="addDebtBtn" class="btn">Add Debt</button>
+      <span class="muted">Tip: APR is annual; interest compounds monthly.</span>
+    </div>
+
+    <hr style="margin:16px 0;border:none;border-top:1px solid var(--edge)" />
+
+    <h2>2) Tracking</h2>
+    <div class="split">
+      <div>
+        <label>Post a Payment</label>
+        <select id="payDebt"></select>
+      </div>
+      <div>
+        <label>Amount ($)</label>
+        <input id="payAmount" type="number" min="0" step="0.01" />
+      </div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="postPaymentBtn" class="btn">Add Payment</button>
+      <button id="applyMonthlyBtn" class="btn ghost">Apply Monthly Cycle</button>
+      <span class="muted">Monthly cycle = interest accrual + minimums (plus your logged extras).</span>
+    </div>
+
+    <hr style="margin:16px 0;border:none;border-top:1px solid var(--edge)" />
+
+    <h2>3) Simulate Payoff</h2>
+    <div class="split">
+      <div><label>Extra budget / mo ($)</label><input id="simExtra" type="number" min="0" step="0.01" value="0" /></div>
+      <div>
+        <label>Assume fixed minimums?</label>
+        <select id="simFixedMins">
+          <option value="yes" selected>Yes (keep mins constant)</option>
+          <option value="no">No (recompute at 1% balance floor)</option>
+        </select>
+      </div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="runSimBtn" class="btn">Run Simulations</button>
+      <button id="exportBtn" class="btn ghost">Export JSON</button>
+      <label class="btn ghost" style="position:relative;overflow:hidden">
+        Import JSON
+        <input id="importInput" type="file" accept="application/json" style="position:absolute;inset:0;opacity:0;cursor:pointer" />
+      </label>
+    </div>
+  </section>
+
+  <!-- Right: Data & Results -->
+  <section class="card">
+    <div class="section-title">
+      <h2 style="margin:0">Current Debts</h2>
+      <span class="pill" id="totalSummary">–</span>
+      <span class="right muted mono" id="sessionNamePill"></span>
+    </div>
+    <div style="overflow:auto">
+      <table id="debtsTable">
+        <thead>
+          <tr>
+            <th>Debt</th><th>Balance ($)</th><th>APR %</th><th>Min / mo ($)</th><th class="nowrap">Last Updated</th><th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:12px">
+      <summary>Payment Log</summary>
+      <div style="overflow:auto;margin-top:8px">
+        <table id="logTable">
+          <thead><tr><th>Date</th><th>Debt</th><th>Amount ($)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr style="margin:16px 0;border:none;border-top:1px solid var(--edge)" />
+
+    <h2>Simulated Payoff Timelines</h2>
+    <div id="simResults" class="grid" style="grid-template-columns:1fr;gap:14px"></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  // ---------- utilities ----------
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const fmtMoney = n => (isNaN(n)?'-':Number(n).toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2}));
+  const todayISO = () => new Date().toISOString().slice(0,10);
+  const uuid = () => crypto?.randomUUID ? crypto.randomUUID() : 'xxxyxxyx'.replace(/[xy]/g,c=> (Math.random()*16|0).toString(16));
+
+  // storage
+  const LS_INDEX = 'debtTracker.sessions';
+  const LS_PREFIX = 'debtTracker.session.';
+
+  const loadIndex = () => JSON.parse(localStorage.getItem(LS_INDEX)||'[]');
+  const saveIndex = (arr) => localStorage.setItem(LS_INDEX, JSON.stringify(arr));
+  const loadSession = id => JSON.parse(localStorage.getItem(LS_PREFIX+id) || 'null');
+  const saveSession = (id,data) => localStorage.setItem(LS_PREFIX+id, JSON.stringify(data));
+  const deleteSession = id => { localStorage.removeItem(LS_PREFIX+id); saveIndex(loadIndex().filter(x=>x.id!==id)); };
+
+  // ---------- state ----------
+  let current = null; // {id, name, debts[], log[]}
+  function newSession(name='My Debts'){
+    const id = uuid();
+    current = { id, name, created: Date.now(), debts: [], log: [] };
+    const idx = loadIndex();
+    idx.unshift({id, name});
+    saveIndex(idx); saveSession(id,current);
+    renderSessionPicker(); selectSession(id);
+  }
+  function selectSession(id){
+    current = loadSession(id);
+    if(!current){ return; }
+    $('#sessionNamePill').textContent = 'Session: ' + current.name;
+    renderAll();
+  }
+  function renameSession(id, name){
+    const idx = loadIndex().map(x=> x.id===id ? {...x, name} : x);
+    saveIndex(idx);
+    current.name = name;
+    saveSession(id,current);
+    renderSessionPicker();
+    $('#sessionNamePill').textContent = 'Session: ' + current.name;
+  }
+
+  // ---------- rendering ----------
+  function renderSessionPicker(){
+    const idx = loadIndex();
+    const s = $('#sessionSelect');
+    s.innerHTML = '';
+    idx.forEach(({id,name})=>{
+      const opt = document.createElement('option');
+      opt.value=id; opt.textContent=name; s.appendChild(opt);
+    });
+    if(current){ s.value=current.id; }
+  }
+
+  function renderDebts(){
+    const tb = $('#debtsTable tbody');
+    tb.innerHTML = '';
+    let totalBal = 0, totalMin = 0, wAPR = 0;
+    current.debts.forEach((d, i)=>{
+      totalBal += d.balance;
+      totalMin += d.min;
+      wAPR += d.balance * d.apr;
+      const tr=document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="mono">${escapeHtml(d.name)}</span></td>
+        <td>$${fmtMoney(d.balance)}</td>
+        <td>${(d.apr*100).toFixed(2)}</td>
+        <td>$${fmtMoney(d.min)}</td>
+        <td>${d.updated||'-'}</td>
+        <td class="nowrap">
+          <button class="btn small ghost" data-edit="${d.id}">Edit</button>
+          <button class="btn small warn" data-del="${d.id}">Remove</button>
+        </td>
+      `;
+      tb.appendChild(tr);
+    });
+    const avgAPR = totalBal>0 ? (wAPR/totalBal)*100 : 0;
+    $('#totalSummary').textContent = `Total: $${fmtMoney(totalBal)} • Mins: $${fmtMoney(totalMin)} • Avg APR: ${avgAPR.toFixed(2)}%`;
+
+    // debt select for payments
+    const sel = $('#payDebt');
+    sel.innerHTML = '';
+    current.debts.forEach(d=>{
+      const o=document.createElement('option');
+      o.value=d.id;o.textContent=d.name; sel.appendChild(o);
+    });
+
+    // bind edit/remove
+    $$('#debtsTable [data-edit]').forEach(btn=> btn.onclick = ()=> editDebt(btn.getAttribute('data-edit')));
+    $$('#debtsTable [data-del]').forEach(btn=> btn.onclick = ()=> removeDebt(btn.getAttribute('data-del')));
+  }
+
+  function renderLog(){
+    const tb = $('#logTable tbody'); tb.innerHTML='';
+    (current.log||[]).slice().reverse().forEach(row=>{
+      const d = getDebt(row.debtId);
+      const tr=document.createElement('tr');
+      tr.innerHTML = `<td>${row.date}</td><td>${d?escapeHtml(d.name):'—'}</td><td>$${fmtMoney(row.amount)}</td>`;
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderAll(){ renderDebts(); renderLog(); }
+
+  // ---------- helpers ----------
+  function getDebt(id){ return current.debts.find(d=>d.id===id); }
+  function escapeHtml(s){ return (s||'').replace(/[&<>'"]/g, c=> ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+
+  // ---------- debt ops ----------
+  function addDebt(){
+    const name = $('#debtName').value.trim();
+    const bal = parseFloat($('#debtBalance').value);
+    const apr = parseFloat($('#debtApr').value)/100;
+    const min = parseFloat($('#debtMin').value);
+    if(!name || !(bal>=0) || !(apr>=0) || !(min>=0)){ alert('Please provide valid debt details.'); return; }
+    current.debts.push({ id: uuid(), name, balance: bal, apr, min, updated: todayISO() });
+    saveSession(current.id,current); renderDebts();
+    $('#debtName').value=''; $('#debtBalance').value=''; $('#debtApr').value=''; $('#debtMin').value='';
+  }
+
+  function editDebt(id){
+    const d = getDebt(id); if(!d) return;
+    const name = prompt('Debt name:', d.name); if(name===null) return;
+    const bal  = parseFloat(prompt('Current balance ($):', d.balance)); if(!(bal>=0)) return;
+    const apr  = parseFloat(prompt('APR %:', (d.apr*100).toFixed(2))); if(!(apr>=0)) return;
+    const min  = parseFloat(prompt('Minimum / mo ($):', d.min)); if(!(min>=0)) return;
+    d.name=name; d.balance=bal; d.apr=apr/100; d.min=min; d.updated=todayISO();
+    saveSession(current.id,current); renderDebts();
+  }
+
+  function removeDebt(id){
+    if(!confirm('Remove this debt?')) return;
+    current.debts = current.debts.filter(d=>d.id!==id);
+    saveSession(current.id,current); renderAll();
+  }
+
+  function postPayment(){
+    const debtId = $('#payDebt').value;
+    const amt = parseFloat($('#payAmount').value);
+    if(!debtId || !(amt>0)) { alert('Choose a debt and enter a positive amount.'); return; }
+    const d = getDebt(debtId); if(!d){ alert('Debt not found.'); return; }
+    d.balance = Math.max(0, d.balance - amt);
+    d.updated = todayISO();
+    (current.log ||= []).push({date: todayISO(), debtId, amount: amt});
+    saveSession(current.id,current); renderAll();
+    $('#payAmount').value='';
+  }
+
+  function applyMonthlyCycle(){
+    // Accrue interest, then subtract minimums (but never below zero)
+    current.debts.forEach(d=>{
+      const i = d.apr/12;
+      d.balance = +(d.balance * (1+i)).toFixed(10);
+      const pay = Math.min(d.min, d.balance);
+      d.balance = +(d.balance - pay).toFixed(10);
+      if(pay>0) (current.log ||= []).push({date: todayISO(), debtId: d.id, amount: pay});
+      d.updated = todayISO();
+    });
+    saveSession(current.id,current); renderAll();
+  }
+
+  // ---------- simulation ----------
+  function cloneDebts(){
+    return current.debts.map(d=> ({id:d.id,name:d.name,balance:+d.balance,apr:+d.apr,min:+d.min}));
+  }
+
+  function simulate(strategy, extraPerMonth, fixedMinimums){
+    // strategy: 'snowball' | 'avalanche' | 'even'
+    // returns { months, totalInterest, schedule: [{month, rows:[{name,beforeInterest,interest,payment,after}] }], payoffDate }
+    let debts = cloneDebts().filter(d=> d.balance>0);
+    const schedule = [];
+    let month = 0, totalInterest = 0;
+
+    // helper: next ordering
+    const orderFn = {
+      snowball: (a,b)=> a.balance - b.balance,
+      avalanche: (a,b)=> b.apr - a.apr,
+      even: (a,b)=> a.name.localeCompare(b.name)
+    }[strategy];
+
+    const minFloorPct = 0.01; // if not fixed, recompute min as max(original min, 1% of balance)
+    const MAX_MONTHS = 1200; // safety
+
+    while(debts.some(d=>d.balance>0) && month < MAX_MONTHS){
+      month++;
+      // determine dynamic mins if needed
+      debts.forEach(d=>{
+        d.curMin = fixedMinimums ? d.min : Math.max(d.min, +(d.balance*minFloorPct).toFixed(2));
+      });
+
+      // interest accrual
+      debts.forEach(d=>{
+        const interest = +(d.balance * (d.apr/12)).toFixed(10);
+        d.balance = +(d.balance + interest).toFixed(10);
+        d.lastInterest = interest;
+        totalInterest += interest;
+      });
+
+      // base payments: minimums
+      debts.forEach(d=>{
+        const p = Math.min(d.curMin, d.balance);
+        d.balance = +(d.balance - p).toFixed(10);
+        d.lastPayment = p;
+      });
+
+      // extra allocation
+      let extra = +extraPerMonth;
+      // distribute to target debts (with order)
+      let ordered = debts.slice().sort(orderFn);
+      if(strategy==='even'){
+        // spread evenly across positive balances
+        const payees = ordered.filter(d=> d.balance>0);
+        const each = payees.length ? extra / payees.length : 0;
+        payees.forEach(d=>{
+          const pay = Math.min(each, d.balance);
+          d.balance = +(d.balance - pay).toFixed(10);
+          d.lastPayment += pay;
+          extra -= pay;
+        });
+      } else {
+        for(const d of ordered){
+          if(extra<=0) break;
+          if(d.balance<=0) continue;
+          const pay = Math.min(extra, d.balance);
+          d.balance = +(d.balance - pay).toFixed(10);
+          d.lastPayment += pay;
+          extra -= pay;
+        }
+      }
+
+      // record step
+      schedule.push({
+        month,
+        rows: debts.map(d=> ({
+          name: d.name,
+          beforeInterest: +(d.balance + d.lastPayment - d.lastInterest).toFixed(2),
+          interest: +d.lastInterest.toFixed(2),
+          payment: +d.lastPayment.toFixed(2),
+          after: +d.balance.toFixed(2)
+        }))
+      });
+
+      // cleanup zero balances
+      debts = debts.map(d=> ({...d, balance:+d.balance})).filter(d=> d.balance > 0.005 ? true : (d.balance=0,false));
+    }
+
+    const payoffDate = addMonthsISO(new Date(), month);
+    return { months: month, totalInterest, schedule, payoffDate };
+  }
+
+  function addMonthsISO(date, m){
+    const d = new Date(date);
+    d.setMonth(d.getMonth()+m);
+    return d.toISOString().slice(0,10);
+  }
+
+  function runSimulations(){
+    if(!current.debts.length){ alert('Add at least one debt first.'); return; }
+    const extra = parseFloat($('#simExtra').value)||0;
+    const fixed = $('#simFixedMins').value==='yes';
+
+    const sims = [
+      {key:'snowball', label:'Snowball (smallest balance first)'},
+      {key:'avalanche', label:'Avalanche (highest APR first)'},
+      {key:'even', label:'Even Split (extra divided equally)'}
+    ].map(s => ({...s, result: simulate(s.key, extra, fixed)}));
+
+    const wrap = $('#simResults'); wrap.innerHTML='';
+    sims.forEach(sim=>{
+      const {months,totalInterest,schedule,payoffDate} = sim.result;
+      const card = document.createElement('div'); card.className='card';
+      const years = (months/12).toFixed(2);
+      card.innerHTML = `
+        <div class="section-title"><h3 style="margin:0">${sim.label}</h3>
+          <span class="pill">${months} mo (${years} yrs)</span>
+          <span class="pill">Total Interest: $${fmtMoney(totalInterest)}</span>
+          <span class="pill">Payoff by ${payoffDate}</span>
+          <button class="btn ghost small right" data-dl="${sim.key}">Download CSV</button>
+        </div>
+        <div style="max-height:300px;overflow:auto">
+          <table>
+            <thead><tr><th>Month</th><th>Debt</th><th>Start ($)</th><th>Interest</th><th>Payment</th><th>End ($)</th></tr></thead>
+            <tbody>${schedule.map(step=> step.rows.map(r=>`
+              <tr><td>${step.month}</td><td>${escapeHtml(r.name)}</td><td>${fmtMoney(r.beforeInterest)}</td>
+              <td>${fmtMoney(r.interest)}</td><td>${fmtMoney(r.payment)}</td><td>${fmtMoney(r.after)}</td></tr>
+            `).join('')).join('')}</tbody>
+          </table>
+        </div>
+      `;
+      wrap.appendChild(card);
+      card.querySelector('[data-dl]').onclick = ()=> downloadCSV(sim.label, schedule);
+    });
+  }
+
+  function downloadCSV(title, schedule){
+    const rows = [['Month','Debt','Start','Interest','Payment','End']];
+    schedule.forEach(step=>{
+      step.rows.forEach(r=>{
+        rows.push([step.month, r.name, r.beforeInterest, r.interest, r.payment, r.after]);
+      });
+    });
+    const csv = rows.map(r=> r.map(x=> `"${String(x).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = title.replace(/\s+/g,'_') + '.csv';
+    a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  // ---------- export/import ----------
+  function exportJSON(){
+    const payload = { meta:{exportedAt: new Date().toISOString()}, session: current };
+    const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (current.name||'debts') + '.json';
+    a.click(); URL.revokeObjectURL(a.href);
+  }
+
+  function importJSON(file){
+    const reader = new FileReader();
+    reader.onload = e=>{
+      try{
+        const data = JSON.parse(e.target.result);
+        if(!data.session?.debts) throw new Error('Invalid file.');
+        const id = uuid();
+        const name = data.session.name ? (data.session.name + ' (import)') : 'Imported Debts';
+        const sess = {...data.session, id, name};
+        saveSession(id, sess);
+        const idx = loadIndex(); idx.unshift({id, name}); saveIndex(idx);
+        renderSessionPicker(); selectSession(id);
+      }catch(err){ alert('Import failed: ' + err.message); }
+    };
+    reader.readAsText(file);
+  }
+
+  // ---------- events ----------
+  $('#addDebtBtn').onclick = addDebt;
+  $('#postPaymentBtn').onclick = postPayment;
+  $('#applyMonthlyBtn').onclick = applyMonthlyCycle;
+  $('#runSimBtn').onclick = runSimulations;
+  $('#exportBtn').onclick = exportJSON;
+  $('#importInput').onchange = e=> e.target.files[0] && importJSON(e.target.files[0]);
+
+  $('#newSessionBtn').onclick = ()=>{
+    const name = prompt('Name for the new session:','My Debts'); if(name===null) return;
+    newSession(name.trim()||'My Debts');
+  };
+  $('#deleteSessionBtn').onclick = ()=>{
+    if(!current) return;
+    if(confirm(`Delete session "${current.name}"? This cannot be undone.`)){
+      const id=current.id; deleteSession(id);
+      const idx=loadIndex();
+      if(idx.length){ selectSession(idx[0].id); renderSessionPicker(); }
+      else{ current=null; newSession('My Debts'); }
+    }
+  };
+  $('#sessionSelect').onchange = e=> selectSession(e.target.value);
+  $('#sessionSelect').ondblclick = ()=>{
+    if(!current) return;
+    const name = prompt('Rename session:', current.name);
+    if(name!==null && name.trim()) renameSession(current.id, name.trim());
+  };
+
+  // ---------- bootstrap ----------
+  (function init(){
+    const idx = loadIndex();
+    if(!idx.length){
+      newSession('My Debts');
+      // seed example removed to avoid placeholders
+    }else{
+      renderSessionPicker();
+      selectSession(idx[0].id);
+    }
+  })();
+})();
+</script>
+</body>
+</html>
