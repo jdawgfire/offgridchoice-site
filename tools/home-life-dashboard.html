@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home Life Dashboard</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --ink:#172a22; --muted:#587266; --edge:#e4e8e5;
+    --card:#ffffff; --accent:#2f7b58; --accent2:#3a8fcb; --warn:#c9413a; --ok:#2f7b58;
+    --radius:16px; --shadow:0 8px 24px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{position:sticky;top:0;z-index:10;padding:10px 14px;background:linear-gradient(180deg,#2f7b58,#286449);color:#fff}
+  header .wrap{max-width:1200px;margin:auto;display:flex;gap:12px;align-items:center;justify-content:space-between}
+  h1{margin:0;font-size:18px;letter-spacing:.2px}
+  a.link{color:#cfeee0;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.5)}
+  main{max-width:1200px;margin:16px auto 40px;padding:0 14px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:1100px){.grid{grid-template-columns:340px 1fr}}
+  .card{background:var(--card);border:1px solid var(--edge);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+  .card h2{margin:0 0 8px;font-size:17px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .split{display:grid;gap:8px;grid-template-columns:1fr}
+  @media(min-width:720px){.split{grid-template-columns:1fr 1fr}}
+  label{font-size:12px;color:var(--muted)}
+  input[type=text], input[type=date], input[type=time], input[type=number], select, textarea{
+    width:100%;padding:9px 11px;border:1px solid var(--edge);border-radius:10px;background:#fff;color:var(--ink)
+  }
+  input[type=number]{text-align:right}
+  textarea{min-height:62px;resize:vertical}
+  .btn{appearance:none;border:0;background:var(--accent);color:#fff;padding:9px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+  .btn.ghost{background:#eaf3ef;color:var(--accent)}
+  .btn.blue{background:var(--accent2)}
+  .btn.warn{background:var(--warn)}
+  .btn.small{padding:6px 9px;font-size:12.5px}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:#eef6f2;color:var(--accent);font-size:12px}
+  .muted{color:var(--muted)}
+  .right{margin-left:auto}
+  .tag{display:inline-flex;align-items:center;gap:6px;padding:3px 7px;border-radius:999px;background:#eef1f7;color:#245d44;border:1px solid #dfe8f5;font-size:12px}
+  .person-dot{width:10px;height:10px;border-radius:50%}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;border-bottom:1px solid var(--edge);vertical-align:top}
+  th{font-size:12px;color:var(--muted);text-align:left}
+  .strike{text-decoration:line-through;color:#8aa096}
+  details{border:1px dashed var(--edge);padding:10px;border-radius:10px;background:#fbfcfb}
+  summary{cursor:pointer;font-weight:600}
+  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="row">
+      <h1>Home Life Dashboard</h1>
+      <span class="pill" id="sessionPill">—</span>
+    </div>
+    <div class="row">
+      <a class="link" href="/tools/dashboard.html">← Return to Dashboard</a>
+      <button class="btn ghost small" id="newSessionBtn">New Household</button>
+      <select id="sessionSelect" title="Households"></select>
+      <button class="btn warn small" id="deleteSessionBtn" title="Delete current household">Delete</button>
+    </div>
+  </div>
+</header>
+
+<main class="grid">
+  <!-- Left column: Household + Add Task -->
+  <section class="card">
+    <h2>Household</h2>
+    <div class="row">
+      <input id="hhName" type="text" placeholder="Household name (e.g., Mummey Home)" />
+      <button class="btn ghost small" id="renameBtn">Rename</button>
+    </div>
+    <div class="split" style="margin-top:8px">
+      <div>
+        <label>Member Name</label>
+        <input id="personName" type="text" placeholder="Add new member" />
+      </div>
+      <div>
+        <label>Color</label>
+        <input id="personColor" type="color" value="#2f7b58" />
+      </div>
+      <div>
+        <label>Emoji/Marker</label>
+        <input id="personEmoji" type="text" maxlength="2" placeholder="e.g., 🐻 or J" />
+      </div>
+      <div class="row" style="align-items:end">
+        <button class="btn small" id="addPersonBtn">Add Member</button>
+      </div>
+    </div>
+
+    <details style="margin-top:10px" open>
+      <summary>Current Members</summary>
+      <div id="peopleList" class="row" style="margin-top:8px;flex-wrap:wrap"></div>
+    </details>
+
+    <hr style="margin:14px 0;border:none;border-top:1px solid var(--edge)" />
+
+    <h2>Add Item</h2>
+    <div class="split">
+      <div>
+        <label>Type</label>
+        <select id="taskType">
+          <option value="todo">To-Do</option>
+          <option value="chore">Chore</option>
+          <option value="shopping">Shopping</option>
+          <option value="event">Event</option>
+        </select>
+      </div>
+      <div>
+        <label>Title</label>
+        <input id="taskTitle" type="text" placeholder="e.g., Clean garage / Buy milk" />
+      </div>
+    </div>
+    <div class="split">
+      <div>
+        <label>Due Date</label>
+        <input id="taskDue" type="date" />
+      </div>
+      <div>
+        <label>Time (events)</label>
+        <input id="taskTime" type="time" />
+      </div>
+    </div>
+    <div class="split">
+      <div>
+        <label>Assign to</label>
+        <div id="assignList" class="row" style="flex-wrap:wrap"></div>
+      </div>
+      <div>
+        <label>Flag / Priority</label>
+        <select id="taskFlag">
+          <option value="none" selected>None</option>
+          <option value="low">Low</option>
+          <option value="med">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <label>Notes</label>
+      <textarea id="taskNotes" placeholder="Details, links, checklist..."></textarea>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="addTaskBtn">Add</button>
+      <button class="btn ghost" id="exportBtn">Export JSON</button>
+      <label class="btn ghost" style="position:relative;overflow:hidden">Import JSON
+        <input id="importInput" type="file" accept="application/json" style="position:absolute;inset:0;opacity:0;cursor:pointer" />
+      </label>
+    </div>
+  </section>
+
+  <!-- Right column: Views + Snapshot -->
+  <section class="card">
+    <div class="row" style="align-items:center">
+      <h2 style="margin:0">Items</h2>
+      <span class="pill" id="countPill">—</span>
+      <div class="right row">
+        <label>Filter person</label>
+        <select id="filterPerson"><option value="all">All</option></select>
+        <label>Type</label>
+        <select id="filterType">
+          <option value="all">All</option>
+          <option value="todo">To-Do</option>
+          <option value="chore">Chore</option>
+          <option value="shopping">Shopping</option>
+          <option value="event">Event</option>
+        </select>
+        <label>Show</label>
+        <select id="filterShow">
+          <option value="open">Open</option>
+          <option value="done">Completed</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="overflow:auto;margin-top:6px">
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>Type</th><th>Title</th><th>When</th><th>Assigned</th><th>Flag</th><th>Notes</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:12px">
+      <summary>Archive</summary>
+      <div style="overflow:auto;margin-top:8px">
+        <table id="archiveTable">
+          <thead><tr><th>Type</th><th>Title</th><th>When</th><th>Assigned</th><th>Flag</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr style="margin:14px 0;border:none;border-top:1px solid var(--edge)" />
+
+    <h2>PNG Snapshot (Selected Members)</h2>
+    <div class="row">
+      <div id="snapPeople" class="row" style="flex-wrap:wrap"></div>
+      <button class="btn blue small" id="makePngBtn">Generate PNG</button>
+      <a id="pngLink" class="btn ghost small" download="household_tasks.png" style="display:none">Download PNG</a>
+    </div>
+    <canvas id="snapCanvas" width="1200" height="1" style="display:none"></canvas>
+  </section>
+</main>
+
+<script>
+(function(){
+  // ---------- utils ----------
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const uuid = () => crypto?.randomUUID? crypto.randomUUID() : Math.random().toString(36).slice(2);
+  const todayISO = () => new Date().toISOString().slice(0,10);
+  const esc = s => (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtWhen = (d,t)=> (d? d + (t? ' ' + t : '') : '—');
+  const flagLabel = f => ({none:'—',low:'Low',med:'Medium',high:'High',urgent:'Urgent'})[f]||'—';
+
+  // ---------- storage (local sessions) ----------
+  const LS_INDEX='homehub.sessions';
+  const LS_PREFIX='homehub.session.';
+  const loadIndex=()=> JSON.parse(localStorage.getItem(LS_INDEX)||'[]');
+  const saveIndex=(x)=> localStorage.setItem(LS_INDEX, JSON.stringify(x));
+  const loadSession=(id)=> JSON.parse(localStorage.getItem(LS_PREFIX+id)||'null');
+  const saveSession=(id,data)=> localStorage.setItem(LS_PREFIX+id, JSON.stringify(data));
+  const deleteSession=(id)=> { localStorage.removeItem(LS_PREFIX+id); saveIndex(loadIndex().filter(s=>s.id!==id)); };
+
+  // ---------- state ----------
+  let current=null; // {id,name,people:[{id,name,color,emoji}], items:[...], archive:[...]}
+
+  function newSession(name='My Household'){
+    const id=uuid();
+    current={id,name,created:Date.now(),people:[],items:[],archive:[]};
+    const idx=loadIndex(); idx.unshift({id,name}); saveIndex(idx);
+    saveSession(id,current);
+    renderSessionPicker(); selectSession(id);
+  }
+  function selectSession(id){
+    const s=loadSession(id); if(!s) return;
+    current=s; $('#sessionPill').textContent='Household: '+current.name;
+    $('#hhName').value=current.name||'';
+    renderAll();
+  }
+  function renameSession(){
+    const name=$('#hhName').value.trim(); if(!name) return;
+    current.name=name; saveSession(current.id,current);
+    const idx=loadIndex().map(x=> x.id===current.id? {...x,name} : x); saveIndex(idx);
+    renderSessionPicker(); $('#sessionPill').textContent='Household: '+current.name;
+  }
+
+  // ---------- people ----------
+  function addPerson(){
+    const name=$('#personName').value.trim(); if(!name){ alert('Enter a member name'); return; }
+    const color=$('#personColor').value||'#2f7b58';
+    const emoji=($('#personEmoji').value||'').trim().slice(0,2);
+    current.people.push({id:uuid(),name,color,emoji});
+    saveSession(current.id,current);
+    $('#personName').value=''; $('#personEmoji').value='';
+    renderPeople(); renderAssigners(); renderFilters(); renderSnapPeople();
+  }
+  function removePerson(id){
+    if(!confirm('Remove this member? Assigned items will keep the name snapshot.')) return;
+    current.people=current.people.filter(p=>p.id!==id);
+    // also strip from items
+    current.items.forEach(it=> it.assignees = (it.assignees||[]).filter(pid=>pid!==id));
+    saveSession(current.id,current); renderAll();
+  }
+
+  // ---------- items ----------
+  function addItem(){
+    const type=$('#taskType').value;
+    const title=$('#taskTitle').value.trim(); if(!title){ alert('Add a title'); return; }
+    const due=$('#taskDue').value||'';
+    const time=$('#taskTime').value||'';
+    const notes=$('#taskNotes').value||'';
+    const assignees=$$('#assignList input[type=checkbox]:checked').map(c=>c.value);
+    const flag=$('#taskFlag').value;
+    const it={id:uuid(),type,title,due,time,notes,assignees,flag,done:false,created:Date.now()};
+    current.items.push(it); saveSession(current.id,current);
+    // reset
+    $('#taskTitle').value=''; $('#taskDue').value=''; $('#taskTime').value=''; $('#taskNotes').value='';
+    $$('#assignList input').forEach(i=> i.checked=false); $('#taskFlag').value='none';
+    renderAll();
+  }
+  function toggleDone(id){
+    const it=current.items.find(x=>x.id===id); if(!it) return;
+    it.done=!it.done; saveSession(current.id,current); renderItems();
+  }
+  function archiveItem(id){
+    const idx=current.items.findIndex(x=>x.id===id); if(idx<0) return;
+    const it=current.items.splice(idx,1)[0]; current.archive.unshift(it);
+    saveSession(current.id,current); renderAll();
+  }
+  function deleteItem(id){
+    if(!confirm('Delete this item?')) return;
+    current.items=current.items.filter(x=>x.id!==id);
+    saveSession(current.id,current); renderAll();
+  }
+
+  // ---------- export/import ----------
+  function exportJSON(){
+    const payload={meta:{exportedAt:new Date().toISOString()}, session:current};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download=(current.name||'household')+'.json'; a.click(); URL.revokeObjectURL(a.href);
+  }
+  function importJSON(file){
+    const r=new FileReader();
+    r.onload=e=>{
+      try{
+        const data=JSON.parse(e.target.result);
+        if(!data.session?.people) throw new Error('Invalid file');
+        const id=uuid(); const sess={...data.session, id, name:(data.session.name||'Imported Household')+' (import)'};
+        saveSession(id,sess); const idx=loadIndex(); idx.unshift({id,name:sess.name}); saveIndex(idx);
+        renderSessionPicker(); selectSession(id);
+      }catch(err){ alert('Import failed: '+err.message); }
+    };
+    r.readAsText(file);
+  }
+
+  // ---------- render ----------
+  function personChip(p){
+    const dot=`<span class="person-dot" style="background:${p.color}"></span>`;
+    const em= p.emoji? `<span>${esc(p.emoji)}</span>` : '';
+    return `<span class="tag">${dot}${em}<span>${esc(p.name)}</span></span>`;
+  }
+
+  function renderPeople(){
+    const div=$('#peopleList'); div.innerHTML='';
+    current.people.forEach(p=>{
+      const el=document.createElement('div'); el.className='row';
+      el.innerHTML= personChip(p) + ` <button class="btn small ghost" data-del="${p.id}">Remove</button>`;
+      div.appendChild(el);
+    });
+    $$('#peopleList [data-del]').forEach(b=> b.onclick=()=> removePerson(b.getAttribute('data-del')));
+  }
+  function renderAssigners(){
+    const div=$('#assignList'); div.innerHTML='';
+    current.people.forEach(p=>{
+      const id='a_'+p.id; const wrap=document.createElement('label'); wrap.className='tag';
+      wrap.innerHTML= `<input id="${id}" type="checkbox" value="${p.id}" style="accent-color:${p.color}"> ${p.emoji?esc(p.emoji):'•'} ${esc(p.name)}`;
+      div.appendChild(wrap);
+    });
+  }
+  function renderFilters(){
+    const sel=$('#filterPerson'); sel.innerHTML='<option value="all">All</option>';
+    current.people.forEach(p=>{ const o=document.createElement('option'); o.value=p.id; o.textContent=p.name; sel.appendChild(o); });
+  }
+  function renderItems(){
+    const tbody=$('#itemsTable tbody'); tbody.innerHTML='';
+    const fP=$('#filterPerson').value, fT=$('#filterType').value, fS=$('#filterShow').value;
+    let list=current.items.slice().sort((a,b)=> (a.due||'9999').localeCompare(b.due||'9999') || a.created-b.created);
+    list=list.filter(it=>{
+      const matchP = fP==='all' ? true : (it.assignees||[]).includes(fP);
+      const matchT = fT==='all' ? true : it.type===fT;
+      const matchS = fS==='all' ? true : (fS==='open'? !it.done : it.done);
+      return matchP && matchT && matchS;
+    });
+    list.forEach(it=>{
+      const row=document.createElement('tr');
+      const assignees=(it.assignees||[]).map(id=>{
+        const p=current.people.find(x=>x.id===id);
+        return p? personChip(p) : `<span class="tag">👤 Unknown</span>`;
+      }).join(' ');
+      row.innerHTML=`
+        <td><span class="pill">${esc(it.type)}</span></td>
+        <td>${it.done?'<span class="strike">':''}${esc(it.title)}${it.done?'</span>':''}</td>
+        <td>${fmtWhen(it.due,it.time)}</td>
+        <td>${assignees||'<span class="muted">—</span>'}</td>
+        <td>${flagLabel(it.flag)}</td>
+        <td>${esc(it.notes||'')}</td>
+        <td class="row">
+          <button class="btn small ghost" data-done="${it.id}">${it.done?'Unmark':'Done'}</button>
+          <button class="btn small blue" data-arch="${it.id}">Archive</button>
+          <button class="btn small warn" data-del="${it.id}">Delete</button>
+        </td>`;
+      tbody.appendChild(row);
+    });
+    $('#countPill').textContent = `${list.length} shown • ${current.items.length} total`;
+    // bind
+    $$('#itemsTable [data-done]').forEach(b=> b.onclick=()=> toggleDone(b.getAttribute('data-done')));
+    $$('#itemsTable [data-arch]').forEach(b=> b.onclick=()=> archiveItem(b.getAttribute('data-arch')));
+    $$('#itemsTable [data-del]').forEach(b=> b.onclick=()=> deleteItem(b.getAttribute('data-del')));
+
+    // archive table
+    const at=$('#archiveTable tbody'); at.innerHTML='';
+    current.archive.forEach(it=>{
+      const people=(it.assignees||[]).map(id=>{
+        const p=current.people.find(x=>x.id===id); return p? personChip(p): '👤';
+      }).join(' ');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${esc(it.type)}</td><td>${esc(it.title)}</td><td>${fmtWhen(it.due,it.time)}</td><td>${people}</td><td>${flagLabel(it.flag)}</td>`;
+      at.appendChild(tr);
+    });
+  }
+  function renderSnapPeople(){
+    const div=$('#snapPeople'); div.innerHTML='';
+    current.people.forEach(p=>{
+      const id='s_'+p.id; const lab=document.createElement('label'); lab.className='tag';
+      lab.innerHTML=`<input id="${id}" type="checkbox" value="${p.id}" style="accent-color:${p.color}"> ${p.emoji?esc(p.emoji):'•'} ${esc(p.name)}`;
+      div.appendChild(lab);
+    });
+  }
+  function renderSessionPicker(){
+    const idx=loadIndex(); const sel=$('#sessionSelect'); sel.innerHTML='';
+    idx.forEach(s=>{ const o=document.createElement('option'); o.value=s.id; o.textContent=s.name; sel.appendChild(o); });
+    if(current) sel.value=current.id;
+  }
+  function renderAll(){ renderPeople(); renderAssigners(); renderFilters(); renderItems(); renderSnapPeople(); }
+
+  // ---------- PNG snapshot ----------
+  function generatePNG(){
+    const selected=$$('#snapPeople input:checked').map(i=>i.value);
+    if(!selected.length){ alert('Pick at least one member'); return; }
+    // Collect open items for selected folks
+    const items=current.items.filter(it=> !it.done && (it.assignees||[]).some(a=>selected.includes(a)))
+      .sort((a,b)=> (a.due||'9999').localeCompare(b.due||'9999') || a.created-b.created);
+    // layout
+    const pad=24, lineH=28, titleH=40;
+    const height = pad*2 + titleH + (items.length? items.length*lineH : lineH);
+    const width = 1200;
+    const c=$('#snapCanvas'); c.width=width; c.height=height; c.style.display='none';
+    const ctx=c.getContext('2d');
+    // bg
+    ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,width,height);
+    ctx.fillStyle='#172a22'; ctx.font='bold 20px system-ui,Segoe UI,Roboto';
+    const names=selected.map(id=> (current.people.find(p=>p.id===id)||{}).name).filter(Boolean).join(', ');
+    ctx.fillText(`Household Tasks — ${current.name}`, pad, pad+20);
+    ctx.font='15px system-ui,Segoe UI,Roboto';
+    ctx.fillStyle='#587266';
+    ctx.fillText(`For: ${names} • ${new Date().toLocaleString()}`, pad, pad+20+22);
+    // header line
+    ctx.strokeStyle='#e4e8e5'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad, pad+titleH); ctx.lineTo(width-pad, pad+titleH); ctx.stroke();
+
+    // rows
+    let y = pad+titleH+22;
+    if(!items.length){
+      ctx.fillStyle='#172a22';
+      ctx.fillText('No open items.', pad, y);
+    } else {
+      items.forEach(it=>{
+        const people=(it.assignees||[]).map(id=>{
+          const p=current.people.find(x=>x.id===id);
+          return p? (p.emoji? p.emoji+' ' : '') + p.name : '—';
+        }).join(' • ');
+        // bullet colored by first assignee color
+        const first = current.people.find(p=>p.id=== (it.assignees||[])[0]);
+        const col = first? first.color : '#2f7b58';
+        ctx.fillStyle=col; ctx.beginPath(); ctx.arc(pad+6,y-8,5,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='#172a22'; ctx.font='bold 16px system-ui,Segoe UI,Roboto';
+        ctx.fillText(`[${it.type}] ${it.title}`, pad+20, y);
+        ctx.font='13px system-ui,Segoe UI,Roboto'; ctx.fillStyle='#587266';
+        const right = `${fmtWhen(it.due,it.time)}  •  ${people}  •  ${flagLabel(it.flag)}`;
+        ctx.fillText(right, pad+20, y+16);
+        y += lineH;
+      });
+    }
+    const url=c.toDataURL('image/png');
+    const link=$('#pngLink'); link.href=url; link.style.display='inline-flex';
+  }
+
+  // ---------- events ----------
+  $('#newSessionBtn').onclick=()=> newSession(prompt('Household name:','My Household')||'My Household');
+  $('#deleteSessionBtn').onclick=()=>{
+    if(!current) return;
+    if(confirm(`Delete household "${current.name}"?`)){
+      const id=current.id; deleteSession(id);
+      const idx=loadIndex(); if(idx.length){ selectSession(idx[0].id); renderSessionPicker(); }
+      else newSession('My Household');
+    }
+  };
+  $('#sessionSelect').onchange=e=> selectSession(e.target.value);
+  $('#renameBtn').onclick=renameSession;
+  $('#addPersonBtn').onclick=addPerson;
+  $('#addTaskBtn').onclick=addItem;
+  $('#filterPerson').onchange=renderItems;
+  $('#filterType').onchange=renderItems;
+  $('#filterShow').onchange=renderItems;
+  $('#exportBtn').onclick=exportJSON;
+  $('#importInput').onchange=e=> e.target.files[0] && importJSON(e.target.files[0]);
+  $('#makePngBtn').onclick=generatePNG;
+
+  // ---------- bootstrap ----------
+  (function init(){
+    const idx=loadIndex();
+    if(!idx.length){ newSession('My Household'); }
+    else{ renderSessionPicker(); selectSession(idx[0].id); }
+  })();
+})();
+</script>
+</body>
+</html>
