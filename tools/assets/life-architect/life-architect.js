@@ -1,3 +1,21 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const addBranchBtn = document.getElementById("addBranchBtn");
+  const addLeafBtn = document.getElementById("addLeafBtn");
+  const pruneTreeBtn = document.getElementById("pruneTreeBtn");
+  const snapshotBtn = document.getElementById("snapshotBtn");
+
+  // Guard: buttons may not exist yet
+  if (!addBranchBtn || !addLeafBtn || !pruneTreeBtn || !snapshotBtn) {
+    console.error("One or more buttons not found.");
+    return;
+  }
+
+  // Add interactions
+  addBranchBtn.addEventListener("click", addBranch);
+  addLeafBtn.addEventListener("click", addLeaf);
+  pruneTreeBtn.addEventListener("click", resetTree);
+  snapshotBtn.addEventListener("click", saveSnapshot);
+});
 const canvas = document.getElementById('treeCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
