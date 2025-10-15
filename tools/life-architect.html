@@ -1,72 +1,54 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Life Architect — Tree of Life (Organic)</title>
-<link rel="stylesheet" href="assets/life-architect/life-architect.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life Architect 🌳 Tree of Life</title>
+<link rel="stylesheet" href="assets/life-architect/life-architect.css">
 <script defer src="assets/life-architect/life-architect.js"></script>
 </head>
-<body class="spring">
-<canvas id="bgAuras" aria-hidden="true"></canvas>
+<body>
+<canvas id="treeCanvas"></canvas>
 
 <header>
-  <h1>🌿 Life Architect <span>▻</span> <strong>Tree of Life</strong></h1>
-  <p class="tagline">Grow branches (structures), bloom leaves (goals). Real roots, real motion.</p>
+  <h1>🌿 Life Architect ▻ <span>Tree of Life</span></h1>
+  <p>Grow your branches, bloom your goals, and evolve through the seasons.</p>
 </header>
 
 <main>
-  <!-- Controls -->
-  <section id="controls" class="panel">
-    <div class="left">
-      <h2>Growth Console</h2>
-      <div class="row">
-        <input type="text" id="structureName" placeholder="Branch (e.g., Health)" />
-        <button id="addStructureBtn" class="btn">Add Branch</button>
-      </div>
-      <div class="row">
-        <select id="structureSelect"></select>
-        <input type="text" id="goalName" placeholder="Leaf (e.g., Run 5K)" />
-        <button id="addGoalBtn" class="btn accent">Add Leaf</button>
-      </div>
-      <div class="row tiny">
-        <button id="clearAllBtn" class="btn danger">Prune Tree</button>
-        <button id="exportPngBtn" class="btn ghost">📸 Tree Memory Snapshot</button>
-      </div>
+  <section id="controls">
+    <div class="group">
+      <input type="text" id="branchName" placeholder="Branch (e.g., Health)">
+      <button id="addBranch">Add Branch</button>
     </div>
-
-    <div class="right">
-      <h2>Seasons & Options</h2>
-      <div class="row">
-        <label class="label">Season</label>
-        <select id="seasonSelect">
-          <option value="spring" selected>Spring</option>
-          <option value="summer">Summer</option>
-          <option value="autumn">Autumn</option>
-          <option value="winter">Winter</option>
-        </select>
-        <label class="label">Sound</label>
-        <label class="switch">
-          <input type="checkbox" id="soundToggle" checked />
-          <span></span>
-        </label>
-      </div>
-      <p class="hint">Click a branch to collapse/expand. Click a leaf to toggle completion.</p>
+    <div class="group">
+      <select id="branchSelect"></select>
+      <input type="text" id="leafName" placeholder="Leaf (Goal, e.g., Run 5K)">
+      <button id="addLeaf">Add Leaf</button>
+    </div>
+    <div class="group">
+      <button id="resetTree" class="danger">Prune Tree</button>
+      <button id="snapshotTree">📸 Tree Memory Snapshot</button>
+    </div>
+    <div class="group">
+      <label for="season">Season:</label>
+      <select id="season">
+        <option>Spring</option>
+        <option selected>Summer</option>
+        <option>Autumn</option>
+        <option>Winter</option>
+      </select>
+      <label><input type="checkbox" id="soundToggle" checked> Sound</label>
     </div>
   </section>
 
-  <!-- Stage -->
-  <section id="stage" class="panel">
-    <canvas id="branches" aria-label="Animated roots and branches"></canvas>
-    <div id="nodes"></div>
+  <section id="treeArea">
+    <canvas id="branchesCanvas"></canvas>
   </section>
 </main>
 
 <footer>
-  <p>Saved locally • Your tree persists between visits 🌱</p>
+  <p>✨ Each branch you grow is a step forward in your evolution. ✨</p>
 </footer>
-
-<!-- Hidden export canvas -->
-<canvas id="exportCanvas" style="display:none"></canvas>
 </body>
 </html>
