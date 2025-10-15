@@ -3,26 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Life Architect — OffGridChoice</title>
-
-<!-- ✅ CSS + deferred JS -->
+<title>Life Architect — Blueprint Mode</title>
 <link rel="stylesheet" href="assets/life-architect/life-architect.css">
 <script defer src="assets/life-architect/life-architect.js"></script>
 </head>
-
 <body>
 <canvas id="background"></canvas>
 
 <header>
-  <h1>Life Architect <span>▻</span> <strong>Blueprint Your Future</strong></h1>
-  <p class="tagline">Design, connect, and light up your personal universe.</p>
+  <h1>Life Architect <span>▻</span> <strong>Blueprint Mode</strong></h1>
+  <p class="tagline">Design your structures, branch your goals, light up your map.</p>
 </header>
 
 <main>
   <section id="controls" class="panel">
     <h2>Blueprint Console</h2>
     <div class="input-group">
-      <input type="text" id="structureName" placeholder="Category (e.g., Health)">
+      <input type="text" id="structureName" placeholder="Structure (e.g., Health)">
       <button id="addStructureBtn" class="btn">Add Structure</button>
     </div>
     <div class="input-group">
@@ -35,13 +32,18 @@
 
   <section id="blueprintArea" class="panel">
     <h2>Holographic Blueprint</h2>
-    <p class="hint">Tap nodes to toggle completion and see your life structure evolve.</p>
-    <div id="holoGrid"></div>
+    <p class="hint">Click a hex hub to collapse/expand its goals. Click a goal to toggle completion.</p>
+
+    <!-- The tree area: DOM nodes + SVG links overlay -->
+    <div id="treeWrap">
+      <svg id="links" aria-hidden="true"></svg>
+      <div id="holoGrid"></div>
+    </div>
   </section>
 </main>
 
 <footer>
-  <p>✨ Progress is stored locally. Every glowing node is a victory. ✨</p>
+  <p>Saved locally • Your blueprint grows as you do</p>
 </footer>
 </body>
 </html>

@@ -1,128 +1,200 @@
-// Life Architect - Holographic Goal Builder
-const $ = s => document.querySelector(s);
-const uuid = () => crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+/* Life Architect — Blueprint Tree with SVG links */
+(() => {
+  "use strict";
 
-// Local storage keys
-const LS_KEY = "lifeArchitect.data";
+  const $ = (s) => document.querySelector(s);
+  const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2));
+  const LS_KEY = "lifeArchitect.data";
 
-let data = JSON.parse(localStorage.getItem(LS_KEY) || '{"structures":[]}');
+  // State
+  let data;
+  function load() {
+    try {
+      data = JSON.parse(localStorage.getItem(LS_KEY) || '{"structures":[]}');
+      if (!data || !Array.isArray(data.structures)) data = { structures: [] };
+      // add collapsed flag
+      data.structures.forEach(s => { if (typeof s.collapsed !== "boolean") s.collapsed = false; });
+    } catch { data = { structures: [] }; }
+  }
+  function save() { localStorage.setItem(LS_KEY, JSON.stringify(data)); }
 
-function saveData() {
-  localStorage.setItem(LS_KEY, JSON.stringify(data));
-}
+  // DOM cache
+  const els = {};
+  function cache() {
+    els.bg = $("#background");
+    els.grid = $("#holoGrid");
+    els.svg = $("#links");
+    els.sel = $("#structureSelect");
+    els.inStruct = $("#structureName");
+    els.btnStruct = $("#addStructureBtn");
+    els.inGoal = $("#goalName");
+    els.btnGoal = $("#addGoalBtn");
+    els.btnClear = $("#clearAllBtn");
+    els.treeWrap = $("#treeWrap");
+  }
 
-function renderStructures() {
-  const select = $("#structureSelect");
-  select.innerHTML = "";
-  data.structures.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s.id;
-    opt.textContent = s.name;
-    select.appendChild(opt);
-  });
-  renderGrid();
-}
+  // Controls
+  function addStructure() {
+    const name = (els.inStruct.value || "").trim();
+    if (!name) return alert("Enter a structure name.");
+    data.structures.push({ id: uuid(), name, goals: [], collapsed: false });
+    els.inStruct.value = "";
+    save(); renderAll();
+  }
+  function addGoal() {
+    const sid = els.sel.value;
+    const s = data.structures.find(x => x.id === sid);
+    const name = (els.inGoal.value || "").trim();
+    if (!s || !name) return alert("Select a structure and enter a goal.");
+    s.goals.push({ id: uuid(), name, complete: false });
+    els.inGoal.value = "";
+    save(); renderAll();
+  }
+  function toggleGoal(sid, gid) {
+    const s = data.structures.find(x => x.id === sid); if (!s) return;
+    const g = s.goals.find(x => x.id === gid); if (!g) return;
+    g.complete = !g.complete; save(); renderAll();
+  }
+  function toggleCollapsed(sid) {
+    const s = data.structures.find(x => x.id === sid); if (!s) return;
+    s.collapsed = !s.collapsed; save(); renderAll();
+  }
+  function clearAll() {
+    if (!confirm("Clear your entire life blueprint?")) return;
+    data = { structures: [] }; save(); renderAll();
+  }
 
-function renderGrid() {
-  const grid = $("#holoGrid");
-  grid.innerHTML = "";
+  // Layout: columns per structure; goals below structure in that column.
+  function layoutAndRender() {
+    els.grid.innerHTML = "";
+    els.svg.setAttribute("width", els.treeWrap.scrollWidth);
+    els.svg.setAttribute("height", Math.max(els.treeWrap.clientHeight, 600));
+    while (els.svg.firstChild) els.svg.removeChild(els.svg.firstChild);
 
-  data.structures.forEach(structure => {
-    const div = document.createElement("div");
-    div.className = "node";
-    div.dataset.id = structure.id;
-    div.textContent = structure.name;
-    div.onclick = () => toggleStructure(structure.id);
-    grid.appendChild(div);
+    const colWidth = 240; // horizontal spacing per structure
+    const topY = 120;     // structure Y
+    const goalGap = 150;  // vertical gap between goals
+    const startX = 140;
 
-    structure.goals.forEach(goal => {
-      const g = document.createElement("div");
-      g.className = "node" + (goal.complete ? " complete" : "");
-      g.textContent = goal.name;
-      g.dataset.sid = structure.id;
-      g.dataset.gid = goal.id;
-      g.onclick = () => toggleGoal(structure.id, goal.id);
-      grid.appendChild(g);
+    const positions = new Map(); // nodeId -> {x,y,type}
+
+    data.structures.forEach((s, idx) => {
+      const x = startX + idx * colWidth;
+      const y = topY;
+
+      // structure node
+      const hub = document.createElement("div");
+      hub.className = "node structure" + (s.collapsed ? " collapsed" : "");
+      hub.style.left = x + "px"; hub.style.top = y + "px";
+      hub.textContent = s.name;
+      hub.title = s.collapsed ? "Expand goals" : "Collapse goals";
+      hub.addEventListener("click", () => toggleCollapsed(s.id));
+      els.grid.appendChild(hub);
+      positions.set(s.id, { x, y, type: "structure" });
+
+      if (!s.collapsed) {
+        s.goals.forEach((g, gi) => {
+          const gx = x;
+          const gy = y + goalGap * (gi + 1);
+          const node = document.createElement("div");
+          node.className = "node goal" + (g.complete ? " complete" : "");
+          node.style.left = gx + "px"; node.style.top = gy + "px";
+          node.textContent = g.name;
+          node.title = "Toggle completion";
+          node.addEventListener("click", () => toggleGoal(s.id, g.id));
+          els.grid.appendChild(node);
+          positions.set(`${s.id}:${g.id}`, { x: gx, y: gy, type: "goal" });
+
+          // link line s -> g
+          drawLink(x, y, gx, gy, g.complete);
+        });
+      }
     });
-  });
-}
 
-function addStructure() {
-  const name = $("#structureName").value.trim();
-  if (!name) return alert("Enter a structure name.");
-  data.structures.push({ id: uuid(), name, goals: [] });
-  $("#structureName").value = "";
-  saveData();
-  renderStructures();
-}
-
-function addGoal() {
-  const sid = $("#structureSelect").value;
-  const s = data.structures.find(x => x.id === sid);
-  const name = $("#goalName").value.trim();
-  if (!s || !name) return alert("Select structure and enter goal.");
-  s.goals.push({ id: uuid(), name, complete: false });
-  $("#goalName").value = "";
-  saveData();
-  renderGrid();
-}
-
-function toggleGoal(sid, gid) {
-  const s = data.structures.find(x => x.id === sid);
-  const g = s.goals.find(x => x.id === gid);
-  g.complete = !g.complete;
-  saveData();
-  renderGrid();
-}
-
-function toggleStructure(id) {
-  const s = data.structures.find(x => x.id === id);
-  const allDone = s.goals.every(g => g.complete);
-  s.goals.forEach(g => g.complete = !allDone);
-  saveData();
-  renderGrid();
-}
-
-function clearAll() {
-  if (confirm("Clear your entire life blueprint?")) {
-    data = { structures: [] };
-    saveData();
-    renderStructures();
+    // resize SVG to fit content height
+    const contentHeight = computeContentHeight(positions);
+    els.svg.setAttribute("height", Math.max(contentHeight + 120, 600));
   }
-}
 
-// Floating background grid
-const bg = document.getElementById("background");
-const ctx = bg.getContext("2d");
-function resizeBG() { bg.width = innerWidth; bg.height = innerHeight; }
-window.addEventListener("resize", resizeBG);
-resizeBG();
+  function drawLink(x1, y1, x2, y2, complete) {
+    // slight curve: use quadratic path
+    const midY = (y1 + y2) / 2;
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const d = `M ${x1} ${y1+60} Q ${x1} ${midY} ${x2} ${y2-60}`;
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", complete ? "#59ffc9" : "#5b8cff");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("opacity", "0.9");
 
-function animateBG() {
-  ctx.clearRect(0, 0, bg.width, bg.height);
-  const spacing = 60;
-  ctx.strokeStyle = "#0ff2";
-  ctx.lineWidth = 1;
-  for (let x = 0; x < bg.width; x += spacing) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, bg.height);
-    ctx.stroke();
+    // animated dash
+    path.setAttribute("stroke-dasharray", "6 6");
+    path.style.animation = "dash 4s linear infinite";
+    els.svg.appendChild(path);
   }
-  for (let y = 0; y < bg.height; y += spacing) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(bg.width, y);
-    ctx.stroke();
+
+  // compute max y to size the SVG
+  function computeContentHeight(posMap){
+    let max = 0;
+    posMap.forEach(({y}) => { if (y>max) max = y; });
+    return max;
   }
-  requestAnimationFrame(animateBG);
-}
-animateBG();
 
-// Events
-$("#addStructureBtn").onclick = addStructure;
-$("#addGoalBtn").onclick = addGoal;
-$("#clearAllBtn").onclick = clearAll;
+  // Populate select + render
+  function renderSelect() {
+    els.sel.innerHTML = "";
+    data.structures.forEach(s => {
+      const op = document.createElement("option");
+      op.value = s.id; op.textContent = s.name; els.sel.appendChild(op);
+    });
+  }
+  function renderAll() {
+    renderSelect();
+    layoutAndRender();
+  }
 
-// Initialize
-renderStructures();
+  // Background blueprint lines
+  function initBG(){
+    const bg = els.bg; if (!bg) return;
+    const ctx = bg.getContext("2d", { alpha:true });
+    function size(){ bg.width = innerWidth; bg.height = innerHeight; }
+    size(); addEventListener("resize", size);
+    let t=0;
+    (function loop(){
+      ctx.clearRect(0,0,bg.width,bg.height);
+      // faint moving rings
+      ctx.strokeStyle = "rgba(66,232,255,.18)";
+      ctx.lineWidth = 1;
+      const cx = bg.width*0.7, cy = bg.height*0.25;
+      for(let r=60;r<420;r+=60){
+        ctx.beginPath(); ctx.arc(cx, cy, r + Math.sin((t+r)/25)*4, 0, Math.PI*2); ctx.stroke();
+      }
+      t++;
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  // Wire events
+  function bind(){
+    els.btnStruct.addEventListener("click", addStructure);
+    els.btnGoal.addEventListener("click", addGoal);
+    els.btnClear.addEventListener("click", clearAll);
+  }
+
+  // Init
+  function init(){
+    cache(); load(); bind(); renderAll(); initBG();
+
+    // CSS keyframes for dashed path (inject once)
+    if (!document.getElementById("dash-anim-style")) {
+      const st = document.createElement("style");
+      st.id = "dash-anim-style";
+      st.textContent = `@keyframes dash { to { stroke-dashoffset: -200; } }`;
+      document.head.appendChild(st);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once:true });
+  } else { init(); }
+})();
