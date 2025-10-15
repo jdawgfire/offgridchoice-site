@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Life Architect 🌳 Tree of Life</title>
 <link rel="stylesheet" href="assets/life-architect/life-architect.css">
-<script defer src="assets/life-architect/life-architect.js"></script>
 </head>
 <body>
 <canvas id="treeCanvas"></canvas>
@@ -38,18 +37,16 @@
         <option>Autumn</option>
         <option>Winter</option>
       </select>
-      <label><input type="checkbox" id="soundToggle" checked> Sound</label>
+      <label style="margin-left:.5rem"><input type="checkbox" id="soundToggle" checked> Sound</label>
     </div>
-  </section>
-
-  <section id="treeArea">
-    <canvas id="branchesCanvas"></canvas>
   </section>
 </main>
 
 <footer>
   <p>✨ Each branch you grow is a step forward in your evolution. ✨</p>
 </footer>
+
+<!-- IMPORTANT: include the script ONCE, at the end -->
 <script src="assets/life-architect/life-architect.js"></script>
 </body>
 </html>
