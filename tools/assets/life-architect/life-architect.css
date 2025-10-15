@@ -1,0 +1,158 @@
+/* LIFE ARCHITECT - Futuristic Blueprint Theme */
+:root {
+  --bg: #050511;
+  --grid: #1a1a33;
+  --accent: #00ffff;
+  --accent2: #7b5eff;
+  --accent3: #4affd7;
+  --danger: #ff3c6a;
+  --text: #d7eaff;
+  --muted: #8da0c8;
+  --panel: rgba(25, 30, 60, 0.5);
+  --radius: 14px;
+  --shadow: 0 0 25px rgba(0,255,255,0.15);
+}
+
+body {
+  margin: 0;
+  font-family: 'Orbitron', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+canvas#background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 50%, #09142f 0%, #020510 100%);
+}
+
+header {
+  text-align: center;
+  padding: 30px 20px;
+}
+header h1 {
+  font-size: 2em;
+  margin: 0;
+  color: var(--accent3);
+  letter-spacing: 1px;
+}
+header h1 span { color: var(--accent2); }
+header strong { color: var(--accent); }
+.tagline {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px 50px;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+h2 { margin-top: 0; color: var(--accent); font-size: 18px; }
+
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+input, select {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--grid);
+  background: #0a0e25;
+  color: var(--text);
+  font-family: inherit;
+}
+input:focus, select:focus {
+  border-color: var(--accent3);
+  box-shadow: 0 0 5px var(--accent3);
+  outline: none;
+}
+.btn {
+  background: linear-gradient(90deg, var(--accent3), var(--accent2));
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: #050511;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .2s ease;
+}
+.btn:hover {
+  box-shadow: 0 0 10px var(--accent2);
+  transform: translateY(-1px);
+}
+.btn.accent {
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+}
+.btn.danger {
+  background: var(--danger);
+  color: white;
+}
+
+#holoGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 10px;
+  position: relative;
+}
+
+.node {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #092a3f, #050a18);
+  border: 1px solid var(--accent3);
+  box-shadow: 0 0 12px #00ffff33;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.node.complete {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent), inset 0 0 15px #00ffff33;
+  transform: scale(1.1);
+}
+.node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed var(--accent2);
+  opacity: 0.2;
+  animation: spin 12s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
