@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Life Architect — Tree of Life (Deluxe)</title>
+<title>Life Architect — Tree of Life (Organic)</title>
 <link rel="stylesheet" href="assets/life-architect/life-architect.css" />
 <script defer src="assets/life-architect/life-architect.js"></script>
 </head>
-<body>
+<body class="spring">
 <canvas id="bgAuras" aria-hidden="true"></canvas>
 
 <header>
   <h1>🌿 Life Architect <span>▻</span> <strong>Tree of Life</strong></h1>
-  <p class="tagline">Grow branches (structures), bloom leaves (goals), and light your path.</p>
+  <p class="tagline">Grow branches (structures), bloom leaves (goals). Real roots, real motion.</p>
 </header>
 
 <main>
@@ -31,7 +31,7 @@
       </div>
       <div class="row tiny">
         <button id="clearAllBtn" class="btn danger">Prune Tree</button>
-        <button id="exportPngBtn" class="btn ghost">📸 Tree Memory Snapshot (PNG)</button>
+        <button id="exportPngBtn" class="btn ghost">📸 Tree Memory Snapshot</button>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
       <div class="row">
         <label class="label">Season</label>
         <select id="seasonSelect">
-          <option value="spring">Spring</option>
+          <option value="spring" selected>Spring</option>
           <option value="summer">Summer</option>
           <option value="autumn">Autumn</option>
           <option value="winter">Winter</option>
@@ -55,18 +55,18 @@
     </div>
   </section>
 
-  <!-- Tree stage -->
+  <!-- Stage -->
   <section id="stage" class="panel">
-    <canvas id="branches" aria-label="Animated branches"></canvas>
+    <canvas id="branches" aria-label="Animated roots and branches"></canvas>
     <div id="nodes"></div>
   </section>
 </main>
 
 <footer>
-  <p>Saved locally • Leave anytime, your tree awaits you next visit 🌱</p>
+  <p>Saved locally • Your tree persists between visits 🌱</p>
 </footer>
 
-<!-- Offscreen export canvas (for snapshot) -->
+<!-- Hidden export canvas -->
 <canvas id="exportCanvas" style="display:none"></canvas>
 </body>
 </html>
