@@ -1,49 +1,72 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Life Architect — Blueprint Mode</title>
-<link rel="stylesheet" href="assets/life-architect/life-architect.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Life Architect — Tree of Life (Deluxe)</title>
+<link rel="stylesheet" href="assets/life-architect/life-architect.css" />
 <script defer src="assets/life-architect/life-architect.js"></script>
 </head>
 <body>
-<canvas id="background"></canvas>
+<canvas id="bgAuras" aria-hidden="true"></canvas>
 
 <header>
-  <h1>Life Architect <span>▻</span> <strong>Blueprint Mode</strong></h1>
-  <p class="tagline">Design your structures, branch your goals, light up your map.</p>
+  <h1>🌿 Life Architect <span>▻</span> <strong>Tree of Life</strong></h1>
+  <p class="tagline">Grow branches (structures), bloom leaves (goals), and light your path.</p>
 </header>
 
 <main>
+  <!-- Controls -->
   <section id="controls" class="panel">
-    <h2>Blueprint Console</h2>
-    <div class="input-group">
-      <input type="text" id="structureName" placeholder="Structure (e.g., Health)">
-      <button id="addStructureBtn" class="btn">Add Structure</button>
+    <div class="left">
+      <h2>Growth Console</h2>
+      <div class="row">
+        <input type="text" id="structureName" placeholder="Branch (e.g., Health)" />
+        <button id="addStructureBtn" class="btn">Add Branch</button>
+      </div>
+      <div class="row">
+        <select id="structureSelect"></select>
+        <input type="text" id="goalName" placeholder="Leaf (e.g., Run 5K)" />
+        <button id="addGoalBtn" class="btn accent">Add Leaf</button>
+      </div>
+      <div class="row tiny">
+        <button id="clearAllBtn" class="btn danger">Prune Tree</button>
+        <button id="exportPngBtn" class="btn ghost">📸 Tree Memory Snapshot (PNG)</button>
+      </div>
     </div>
-    <div class="input-group">
-      <select id="structureSelect"></select>
-      <input type="text" id="goalName" placeholder="Goal (e.g., Run 5K)">
-      <button id="addGoalBtn" class="btn accent">Add Goal</button>
+
+    <div class="right">
+      <h2>Seasons & Options</h2>
+      <div class="row">
+        <label class="label">Season</label>
+        <select id="seasonSelect">
+          <option value="spring">Spring</option>
+          <option value="summer">Summer</option>
+          <option value="autumn">Autumn</option>
+          <option value="winter">Winter</option>
+        </select>
+        <label class="label">Sound</label>
+        <label class="switch">
+          <input type="checkbox" id="soundToggle" checked />
+          <span></span>
+        </label>
+      </div>
+      <p class="hint">Click a branch to collapse/expand. Click a leaf to toggle completion.</p>
     </div>
-    <button id="clearAllBtn" class="btn danger">Reset All</button>
   </section>
 
-  <section id="blueprintArea" class="panel">
-    <h2>Holographic Blueprint</h2>
-    <p class="hint">Click a hex hub to collapse/expand its goals. Click a goal to toggle completion.</p>
-
-    <!-- The tree area: DOM nodes + SVG links overlay -->
-    <div id="treeWrap">
-      <svg id="links" aria-hidden="true"></svg>
-      <div id="holoGrid"></div>
-    </div>
+  <!-- Tree stage -->
+  <section id="stage" class="panel">
+    <canvas id="branches" aria-label="Animated branches"></canvas>
+    <div id="nodes"></div>
   </section>
 </main>
 
 <footer>
-  <p>Saved locally • Your blueprint grows as you do</p>
+  <p>Saved locally • Leave anytime, your tree awaits you next visit 🌱</p>
 </footer>
+
+<!-- Offscreen export canvas (for snapshot) -->
+<canvas id="exportCanvas" style="display:none"></canvas>
 </body>
 </html>
