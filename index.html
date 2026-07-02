@@ -1,184 +1,1446 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore top-rated off-grid gear: solar panels, batteries, and water purification systems.">
-  <title>OffGridChoice - Live Free, Live Off Grid</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Phandalin Orb | Secret Wizard Newspaper of the Sword Coast Frontier</title>
+  <meta name="description" content="The Phandalin Orb is a hidden magical broadsheet reflecting whispered reports, dangerous omens, notable souls, and frontier news from Phandalin and the Sword Coast." />
   <style>
+    :root {
+      --black: #050407;
+      --ink: #21160f;
+      --ash: #1a1720;
+      --night: #080b16;
+      --midnight: #11182d;
+      --deep-blue: #122a46;
+      --orb: #9be8ff;
+      --orb-soft: rgba(155, 232, 255, 0.46);
+      --silver: #d9ecf2;
+      --cream: #f7edcf;
+      --parchment: #efe0b6;
+      --parchment-2: #d8bf82;
+      --parchment-3: #b68a4c;
+      --red: #8e1f1a;
+      --red-dark: #54100e;
+      --gold: #d7ad55;
+      --old-gold: #9d7133;
+      --green-note: #dce9d0;
+      --blue-note: #d9e9ed;
+      --border-dark: rgba(50, 25, 13, 0.42);
+      --glass: rgba(9, 12, 24, 0.74);
+      --shadow: rgba(0, 0, 0, 0.48);
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--black); }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #e9f5e3;
-      color: #2e2e2e;
+      min-height: 100vh;
+      color: var(--cream);
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(85, 16, 14, 0.24), transparent 34rem),
+        radial-gradient(circle at 12% 12%, rgba(215, 173, 85, 0.14), transparent 28rem),
+        radial-gradient(circle at 86% 10%, rgba(155, 232, 255, 0.16), transparent 31rem),
+        linear-gradient(180deg, #040306 0%, #080b15 44%, #09080a 100%);
+      overflow-x: hidden;
     }
-    header {
-      background-color: #355e3b;
-      color: white;
-      padding: 1rem 2rem;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -5;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 88px 88px;
+      mask-image: radial-gradient(circle at center, black 0 62%, transparent 90%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 90;
+      background:
+        radial-gradient(circle at center, transparent 58%, rgba(0,0,0,0.42) 100%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 4px);
+      opacity: 0.5;
+      mix-blend-mode: soft-light;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: -4rem;
+      z-index: 200;
+      padding: 0.7rem 1rem;
+      background: var(--cream);
+      color: var(--ink);
+      border-radius: 999px;
+      font-weight: 800;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 13% 17%, rgba(255,255,255,0.85) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 24% 28%, rgba(255,255,255,0.7) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 67% 16%, rgba(255,255,255,0.9) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 78% 37%, rgba(255,255,255,0.55) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 52% 42%, rgba(155,232,255,0.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 39% 74%, rgba(255,255,255,0.6) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 89% 70%, rgba(255,255,255,0.7) 0 1px, transparent 1.5px);
+      background-size: 460px 460px, 540px 540px, 610px 610px, 690px 690px, 760px 760px, 820px 820px, 920px 920px;
+      animation: starDrift 80s linear infinite;
+    }
+
+    @keyframes starDrift {
+      from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+      to { background-position: 80px -180px, -120px -260px, 140px -210px, -80px -150px, 180px -320px, 90px -260px, -190px -280px; }
+    }
+
+    .constellation-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      opacity: 0.58;
+    }
+
+    .constellation-layer svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .constellation-layer line,
+    .constellation-layer path {
+      stroke: rgba(208, 232, 245, 0.36);
+      stroke-width: 1;
+      fill: none;
+      filter: drop-shadow(0 0 6px rgba(155,232,255,0.35));
+    }
+
+    .constellation-layer circle {
+      fill: rgba(255, 248, 218, 0.9);
+      filter: drop-shadow(0 0 8px rgba(255,248,218,0.7));
+    }
+
+    .constellation-layer text {
+      fill: rgba(247, 237, 207, 0.5);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .page {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      border-bottom: 1px solid rgba(215, 173, 85, 0.24);
+      background:
+        linear-gradient(90deg, rgba(5,4,7,0.96), rgba(23, 11, 10, 0.91), rgba(5,4,7,0.96));
+      box-shadow: 0 16px 42px rgba(0,0,0,0.5);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-wrap {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      min-height: 84px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
+      gap: 1.4rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: max-content;
+    }
+
+    .brand-seal {
+      width: 48px;
+      height: 48px;
+      position: relative;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 36% 30%, #fff 0 8%, var(--orb) 14%, #2a83a9 32%, #162849 58%, #06060b 100%);
+      border: 1px solid rgba(247,237,207,0.58);
+      box-shadow:
+        0 0 20px rgba(155,232,255,0.62),
+        0 0 38px rgba(215,173,85,0.16),
+        inset -10px -12px 22px rgba(0,0,0,0.42);
+    }
+
+    .brand-seal::before,
+    .brand-seal::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border: 1px solid rgba(215, 173, 85, 0.44);
+      border-radius: 50%;
+      transform: rotate(22deg) scaleY(0.42);
+    }
+
+    .brand-seal::after {
+      inset: -13px;
+      border-color: rgba(155, 232, 255, 0.28);
+      transform: rotate(-28deg) scaleY(0.35);
+    }
+
+    .brand-text strong {
+      display: block;
+      color: var(--cream);
+      font-size: clamp(1rem, 1.8vw, 1.38rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(215,173,85,0.28);
+    }
+
+    .brand-text span {
+      display: block;
+      margin-top: 0.16rem;
+      color: rgba(247,237,207,0.62);
+      font-size: 0.72rem;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 0.46rem;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0.52rem 0.74rem;
+      color: rgba(247,237,207,0.78);
+      border: 1px solid rgba(215,173,85,0.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.025);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      transition: 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #fff;
+      border-color: rgba(215,173,85,0.55);
+      background: rgba(142,31,26,0.22);
+      box-shadow: 0 0 22px rgba(215,173,85,0.12);
+      outline: none;
+    }
+
+    .hero {
+      position: relative;
+      padding: clamp(2.2rem, 5vw, 5.8rem) 0 clamp(3rem, 5vw, 5rem);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 0.94fr 1.06fr;
+      gap: clamp(1.5rem, 4vw, 4.5rem);
       align-items: center;
     }
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-    nav ul li {
-      margin-left: 1.5rem;
+
+    .hero-copy {
       position: relative;
+      z-index: 3;
     }
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.72rem;
+      border: 1px solid rgba(215,173,85,0.44);
+      border-radius: 999px;
+      color: #ffe2a0;
+      background: rgba(84,16,14,0.34);
+      box-shadow: 0 0 30px rgba(215,173,85,0.08);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
-    nav ul li a:hover {
-      text-decoration: underline;
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffdf89;
+      box-shadow: 0 0 14px #ffdf89;
+      animation: pulse 1.8s ease-in-out infinite;
     }
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1581092580502-23f50d3bc589?ixlib=rb-4.0.3&auto=format&fit=crop&w=1650&q=80') center/cover no-repeat;
-      color: white;
-      padding: 5rem 2rem;
-      text-align: center;
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.55; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.25); }
     }
-    .hero h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin: 1.2rem 0 1rem;
+      color: var(--cream);
+      font-size: clamp(3.3rem, 8.5vw, 8rem);
+      line-height: 0.82;
+      letter-spacing: -0.075em;
+      text-shadow:
+        0 0 22px rgba(215,173,85,0.18),
+        0 0 48px rgba(155,232,255,0.12);
     }
-    .categories {
-      display: flex;
-      justify-content: space-around;
-      padding: 3rem 2rem;
-      background-color: #f4efe3;
+
+    h1 span {
+      display: block;
+      color: #fff3c5;
     }
-    .category {
-      text-align: center;
-      width: 30%;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #ffffff;
+
+    .lede {
+      max-width: 690px;
+      color: rgba(247,237,207,0.78);
+      font-size: clamp(1.05rem, 1.75vw, 1.28rem);
+      line-height: 1.72;
     }
-    .category h3 {
-      color: #355e3b;
-    }
-    .category a {
-      text-decoration: none;
-      color: #3b6f41;
-      font-weight: bold;
-    }
-    .recent-articles {
-      padding: 2rem;
-      background-color: #ffffff;
-    }
-    .recent-articles h3 {
-      color: #355e3b;
-      text-align: center;
-    }
-    .article-list {
+
+    .hero-buttons {
       display: flex;
       flex-wrap: wrap;
+      gap: 0.9rem;
+      margin: 1.6rem 0 1.4rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      gap: 1.5rem;
+      min-height: 48px;
+      padding: 0.82rem 1.05rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .button.primary {
+      color: #fff3d0;
+      background: linear-gradient(180deg, #a32a23, #6c1713);
+      border: 1px solid rgba(247,237,207,0.34);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.36), 0 0 28px rgba(142,31,26,0.28);
+    }
+
+    .button.secondary {
+      color: #140c08;
+      background: linear-gradient(180deg, #ffe5a2, #c6923c);
+      border: 1px solid rgba(255,239,193,0.5);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.34), 0 0 28px rgba(215,173,85,0.15);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 42px rgba(0,0,0,0.46), 0 0 34px rgba(215,173,85,0.25);
+      outline: none;
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+      max-width: 780px;
+    }
+
+    .status {
+      padding: 0.84rem 0.9rem;
+      border: 1px solid rgba(215,173,85,0.18);
+      border-radius: 0.9rem;
+      background: rgba(10,10,14,0.62);
+    }
+
+    .status span {
+      display: block;
+      color: rgba(247,237,207,0.56);
+      font-size: 0.68rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .status strong {
+      display: block;
+      margin-top: 0.35rem;
+      color: #fff3c5;
+      font-size: 0.98rem;
+      line-height: 1.24;
+    }
+
+    .orb-broadsheet {
+      position: relative;
+      display: grid;
+      min-height: 680px;
+      place-items: center;
+    }
+
+    .orb-glow {
+      position: absolute;
+      width: min(78vw, 560px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(155,232,255,0.24), transparent 68%);
+      filter: blur(20px);
+      animation: breathe 4.8s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.55; transform: scale(0.94); }
+      50% { opacity: 0.92; transform: scale(1.06); }
+    }
+
+    .orb-core {
+      position: absolute;
+      top: 3%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(72vw, 390px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 24%, rgba(255,255,255,0.95) 0 8%, rgba(202,246,255,0.68) 12%, transparent 30%),
+        radial-gradient(circle at 52% 50%, rgba(98,198,224,0.82), rgba(25,58,88,0.86) 46%, rgba(5,7,14,0.96) 76%);
+      border: 1px solid rgba(247,237,207,0.3);
+      box-shadow:
+        0 0 34px rgba(155,232,255,0.58),
+        0 0 110px rgba(155,232,255,0.22),
+        inset -25px -32px 55px rgba(0,0,0,0.48),
+        inset 18px 18px 34px rgba(255,255,255,0.26);
+      overflow: hidden;
+    }
+
+    .orb-core::before {
+      content: "";
+      position: absolute;
+      inset: 10%;
+      border-radius: 50%;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.34), transparent 38%),
+        repeating-linear-gradient(105deg, transparent 0 18px, rgba(255,255,255,0.045) 19px 20px);
+      animation: orbTurn 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbTurn {
+      from { transform: translate(-2%, 2%) rotate(-2deg); }
+      to { transform: translate(3%, -2%) rotate(3deg); }
+    }
+
+    .edition-paper {
+      position: relative;
+      z-index: 4;
+      width: min(100%, 470px);
+      margin-top: 8.5rem;
+      padding: 1.05rem;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(255,248,224,0.97), rgba(227,202,148,0.96)),
+        repeating-linear-gradient(0deg, rgba(33,22,15,0.035) 0 1px, transparent 1px 16px);
+      border: 1px solid rgba(51, 29, 15, 0.58);
+      border-radius: 0.5rem;
+      box-shadow:
+        0 26px 70px rgba(0,0,0,0.48),
+        inset 0 0 50px rgba(92,50,19,0.14);
+      transform: rotate(-1.1deg);
+    }
+
+    .edition-paper::before {
+      content: "";
+      position: absolute;
+      inset: 0.55rem;
+      border: 1px solid rgba(142,31,26,0.28);
+      pointer-events: none;
+    }
+
+    .paper-masthead {
+      position: relative;
+      text-align: center;
+      padding: 0.75rem 0.7rem 0.55rem;
+      border-bottom: 4px double rgba(33,22,15,0.6);
+    }
+
+    .paper-masthead small {
+      display: block;
+      color: var(--red);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .paper-masthead strong {
+      display: block;
+      margin-top: 0.2rem;
+      color: #24130b;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+
+    .paper-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      padding: 0.9rem 0.65rem 0.6rem;
+    }
+
+    .paper-columns h2 {
+      grid-column: 1 / -1;
+      margin: 0 0 0.2rem;
+      color: var(--red-dark);
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      line-height: 0.98;
+    }
+
+    .paper-columns p {
+      margin: 0;
+      color: rgba(33,22,15,0.82);
+      line-height: 1.42;
+      font-size: 0.9rem;
+    }
+
+    .paper-stamp {
+      display: inline-flex;
+      margin-top: 0.8rem;
+      padding: 0.35rem 0.5rem;
+      color: var(--red-dark);
+      border: 2px solid rgba(142,31,26,0.48);
+      border-radius: 0.25rem;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transform: rotate(1.5deg);
+    }
+
+    .paper-note {
+      margin: 0.3rem 0.65rem 0.6rem;
+      padding: 0.65rem;
+      color: rgba(33,22,15,0.82);
+      background: rgba(216, 233, 237, 0.72);
+      border-left: 4px solid #557e8d;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    section {
+      position: relative;
+      padding: clamp(3rem, 6vw, 6rem) 0;
+    }
+
+    .section-head {
+      max-width: 830px;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #ffd98d;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
+    .section-label::before {
+      content: "✦";
+      color: var(--orb);
+      text-shadow: 0 0 10px rgba(155,232,255,0.7);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--cream);
+      font-size: clamp(2.1rem, 5vw, 4.6rem);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+    }
+
+    .section-head p {
+      max-width: 780px;
+      margin: 1rem 0 0;
+      color: rgba(247,237,207,0.72);
+      font-size: 1.02rem;
+      line-height: 1.72;
+    }
+
+    .panel {
+      position: relative;
+      border: 1px solid rgba(215,173,85,0.24);
+      border-radius: 1.2rem;
+      background:
+        linear-gradient(180deg, rgba(12, 12, 18, 0.88), rgba(20, 12, 10, 0.76)),
+        radial-gradient(circle at 18% 0%, rgba(215,173,85,0.1), transparent 18rem);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.38), inset 0 0 40px rgba(215,173,85,0.035);
+      overflow: hidden;
+    }
+
+    .front-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .lead-story {
+      position: relative;
+      min-height: 520px;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255,249,225,0.96), rgba(220,190,126,0.94)),
+        repeating-linear-gradient(0deg, rgba(33,22,15,0.035) 0 1px, transparent 1px 18px);
+      border: 1px solid rgba(51, 29, 15, 0.52);
+      border-radius: 0.9rem;
+      box-shadow: inset 0 0 55px rgba(77,42,17,0.16), 0 20px 56px rgba(0,0,0,0.36);
+      overflow: hidden;
+    }
+
+    .lead-story::before {
+      content: "";
+      position: absolute;
+      inset: 0.9rem;
+      border: 1px solid rgba(142,31,26,0.24);
+      pointer-events: none;
+    }
+
+    .lead-art {
+      min-height: 190px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(33,22,15,0.28);
+      background:
+        radial-gradient(circle at 48% 18%, rgba(255,255,255,0.55), transparent 5rem),
+        radial-gradient(circle at 48% 24%, rgba(155,232,255,0.34), transparent 12rem),
+        linear-gradient(180deg, #243043 0%, #4b5a63 46%, #141317 47%, #08070a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lead-art::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 26%;
+      width: 58%;
+      height: 34%;
+      transform: translate(-50%, -50%) skewX(-18deg);
+      background:
+        linear-gradient(160deg, transparent 0 48%, rgba(255,255,255,0.72) 49% 52%, transparent 53%),
+        linear-gradient(25deg, transparent 0 44%, rgba(225,245,255,0.55) 45% 50%, transparent 51%);
+      clip-path: polygon(4% 58%, 34% 22%, 52% 52%, 74% 16%, 98% 58%, 81% 72%, 54% 61%, 28% 78%);
+      filter: drop-shadow(0 0 18px rgba(155,232,255,0.28));
+      opacity: 0.86;
+    }
+
+    .lead-art::after {
+      content: "CRYOVAIN";
+      position: absolute;
+      right: 0.7rem;
+      bottom: 0.5rem;
+      color: rgba(255,255,255,0.2);
+      font-size: clamp(2rem, 5vw, 4.4rem);
+      font-weight: 900;
+      letter-spacing: 0.16em;
+    }
+
+    .story-rubric {
+      display: inline-flex;
+      margin-bottom: 0.6rem;
+      padding: 0.35rem 0.5rem;
+      color: var(--red-dark);
+      border: 1px solid rgba(142,31,26,0.45);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .lead-story h3 {
+      margin: 0;
+      color: var(--red-dark);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 0.93;
+      letter-spacing: -0.05em;
+    }
+
+    .lead-story p {
+      color: rgba(33,22,15,0.84);
+      line-height: 1.58;
+      font-size: 1.02rem;
+    }
+
+    .lead-story .byline {
+      margin-top: 1rem;
+      color: rgba(33,22,15,0.62);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .story-stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .secret-card {
+      position: relative;
+      padding: 1rem;
+      border-radius: 0.9rem;
+      border: 1px solid rgba(215,173,85,0.22);
+      background:
+        linear-gradient(180deg, rgba(9,12,24,0.88), rgba(24,14,12,0.74));
+      box-shadow: inset 0 0 26px rgba(155,232,255,0.035);
+    }
+
+    .secret-card::before {
+      content: attr(data-mark);
+      position: absolute;
+      right: 0.75rem;
+      top: 0.2rem;
+      color: rgba(215,173,85,0.08);
+      font-size: 4.5rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .secret-card time {
+      display: block;
+      color: #ffd98d;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+
+    .secret-card h3 {
+      position: relative;
+      color: #fff2c5;
+      margin: 0 0 0.4rem;
+      font-size: 1.14rem;
+      line-height: 1.22;
+    }
+
+    .secret-card p {
+      position: relative;
+      margin: 0;
+      color: rgba(247,237,207,0.7);
+      line-height: 1.58;
+      font-size: 0.94rem;
+    }
+
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .dossier {
+      position: relative;
+      min-height: 260px;
+      padding: 1.05rem;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(255,248,224,0.96), rgba(222,196,139,0.92)),
+        repeating-linear-gradient(0deg, rgba(33,22,15,0.03) 0 1px, transparent 1px 18px);
+      border: 1px solid rgba(51, 29, 15, 0.5);
+      border-radius: 0.72rem;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.32), inset 0 0 40px rgba(92,50,19,0.12);
+      overflow: hidden;
+    }
+
+    .dossier::before {
+      content: attr(data-initial);
+      position: absolute;
+      right: -0.2rem;
+      bottom: -1.1rem;
+      color: rgba(142,31,26,0.09);
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .dossier .classline {
+      color: var(--red);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .dossier h3 {
+      position: relative;
+      margin: 0.35rem 0 0.45rem;
+      color: #24130b;
+      font-size: 1.58rem;
+      line-height: 1;
+    }
+
+    .dossier p,
+    .dossier .sighting {
+      position: relative;
+      color: rgba(33,22,15,0.82);
+      line-height: 1.52;
+      font-size: 0.95rem;
+    }
+
+    .dossier .sighting {
+      margin-top: 0.9rem;
+      padding-top: 0.72rem;
+      border-top: 1px solid rgba(33,22,15,0.18);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .watch-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .orb-watch {
+      padding: 1.2rem;
+    }
+
+    .orb-watch h3 {
+      color: #fff3c5;
+      margin: 0 0 0.6rem;
+      font-size: 1.7rem;
+    }
+
+    .orb-watch p {
+      color: rgba(247,237,207,0.7);
+      line-height: 1.7;
+    }
+
+    .watch-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
       margin-top: 1rem;
     }
-    .article-card {
-      width: 280px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+
+    .watch-item {
+      padding: 0.82rem;
+      border: 1px solid rgba(155,232,255,0.14);
+      border-radius: 0.8rem;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .watch-item strong {
+      display: block;
+      color: #fff3c5;
+      margin-bottom: 0.25rem;
+    }
+
+    .watch-item span {
+      display: block;
+      color: rgba(247,237,207,0.62);
+      line-height: 1.45;
+      font-size: 0.9rem;
+    }
+
+    .sky-map {
+      min-height: 400px;
       padding: 1rem;
-      background-color: #f9f9f9;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(155,232,255,0.13), transparent 18rem),
+        linear-gradient(180deg, rgba(5,7,14,0.86), rgba(15,10,14,0.88));
     }
-    .article-card h4 {
-      margin-top: 0;
+
+    .sky-map svg {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      display: block;
     }
-    .article-card a {
-      color: #355e3b;
-      text-decoration: none;
+
+    .sky-map line,
+    .sky-map path {
+      stroke: rgba(217,236,242,0.55);
+      stroke-width: 1.4;
+      fill: none;
+      filter: drop-shadow(0 0 5px rgba(155,232,255,0.35));
     }
-    .article-card a:hover {
-      text-decoration: underline;
+
+    .sky-map circle {
+      fill: rgba(255,248,218,0.96);
+      filter: drop-shadow(0 0 7px rgba(255,248,218,0.9));
     }
-    footer {
-      padding: 1.5rem;
-      background-color: #4a5c47;
-      color: white;
-      text-align: center;
+
+    .sky-map text {
+      fill: rgba(247,237,207,0.78);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
-    footer a {
-      color: #cfcfcf;
-      margin: 0 1rem;
-      text-decoration: none;
+
+    .npc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
     }
-    footer a:hover {
-      text-decoration: underline;
+
+    .npc {
+      padding: 0.9rem;
+      border-radius: 0.72rem;
+      border: 1px solid rgba(215,173,85,0.2);
+      background: rgba(247,237,207,0.055);
+    }
+
+    .npc strong {
+      display: block;
+      color: #fff3c5;
+      margin-bottom: 0.2rem;
+    }
+
+    .npc span {
+      display: block;
+      color: #ffd98d;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+
+    .npc p {
+      margin: 0;
+      color: rgba(247,237,207,0.66);
+      line-height: 1.52;
+      font-size: 0.9rem;
+    }
+
+    .chronicle {
+      padding: 1rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(215,173,85,0.12);
+    }
+
+    .timeline-item:last-child { border-bottom: 0; }
+
+    .timeline-date {
+      color: #ffd98d;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .timeline-copy h3 {
+      margin: 0 0 0.35rem;
+      color: #fff3c5;
+      font-size: 1.15rem;
+    }
+
+    .timeline-copy p {
+      margin: 0;
+      color: rgba(247,237,207,0.68);
+      line-height: 1.58;
+      font-size: 0.94rem;
+    }
+
+    .notice-board {
+      padding: 1rem;
+      border-radius: 1.1rem;
+      background:
+        linear-gradient(135deg, rgba(58,30,16,0.72), rgba(20,10,6,0.9)),
+        radial-gradient(circle at top, rgba(215,173,85,0.16), transparent 20rem);
+      border: 1px solid rgba(215,173,85,0.3);
+      box-shadow: inset 0 0 55px rgba(0,0,0,0.24), 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .notice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .notice {
+      min-height: 210px;
+      padding: 1rem;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(255,248,224,0.96), rgba(220,191,129,0.95)),
+        repeating-linear-gradient(0deg, rgba(33,22,15,0.035) 0 1px, transparent 1px 16px);
+      border-radius: 0.38rem;
+      border: 1px solid rgba(33,22,15,0.2);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.28), inset 0 0 34px rgba(92,50,19,0.12);
+      transform: rotate(var(--tilt, -0.7deg));
+    }
+
+    .notice:nth-child(2) { --tilt: 0.9deg; background: linear-gradient(135deg, rgba(220,233,208,0.96), rgba(192,212,168,0.94)); }
+    .notice:nth-child(3) { --tilt: -0.3deg; background: linear-gradient(135deg, rgba(217,233,237,0.96), rgba(175,206,213,0.94)); }
+    .notice:nth-child(4) { --tilt: 0.6deg; }
+    .notice:nth-child(5) { --tilt: -1deg; }
+    .notice:nth-child(6) { --tilt: 0.35deg; background: linear-gradient(135deg, rgba(217,233,237,0.96), rgba(175,206,213,0.94)); }
+
+    .notice strong {
+      display: block;
+      color: #2a170b;
+      font-size: 1.08rem;
+      line-height: 1.18;
+      margin-bottom: 0.5rem;
+    }
+
+    .notice p {
+      color: rgba(33,22,15,0.82);
+      line-height: 1.48;
+      font-size: 0.94rem;
+    }
+
+    .notice small {
+      display: block;
+      margin-top: 0.8rem;
+      color: rgba(33,22,15,0.62);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(215,173,85,0.2);
+      padding: 2.5rem 0;
+      background: rgba(4,3,6,0.7);
+    }
+
+    .footer-inner {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 1.6rem;
+      flex-wrap: wrap;
+    }
+
+    .footer strong {
+      display: block;
+      color: #fff3c5;
+      font-size: 0.9rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+
+    .footer p {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(247,237,207,0.62);
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .footer-links a {
+      color: rgba(247,237,207,0.7);
+      border-bottom: 1px solid rgba(215,173,85,0.34);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1030px) {
+      .hero-grid,
+      .front-grid,
+      .watch-grid { grid-template-columns: 1fr; }
+      .orb-broadsheet { min-height: 610px; }
+      .orb-core { top: 0; }
+      .edition-paper { margin-top: 8rem; }
+      .dossier-grid, .npc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .page { width: min(100% - 1rem, var(--max)); }
+
+      .site-header { position: relative; }
+
+      .nav-wrap {
+        min-height: auto;
+        padding: 0.85rem 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+      }
+
+      .brand {
+        justify-content: center;
+        text-align: center;
+        min-width: 0;
+      }
+
+      .brand-seal { width: 42px; height: 42px; flex: 0 0 auto; }
+      .brand-text strong { font-size: 1rem; }
+      .brand-text span { font-size: 0.62rem; letter-spacing: 0.11em; }
+
+      .nav-links {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.42rem;
+        width: 100%;
+      }
+
+      .nav-links a {
+        width: 100%;
+        min-height: 34px;
+        padding: 0.46rem 0.25rem;
+        font-size: 0.61rem;
+        letter-spacing: 0.07em;
+        white-space: nowrap;
+      }
+
+      .hero { padding-top: 1.6rem; }
+      h1 { font-size: clamp(3.4rem, 16vw, 5.3rem); }
+      .lede { font-size: 1rem; }
+      .hero-buttons { gap: 0.6rem; }
+      .button { flex: 1 1 100%; }
+      .status-row { grid-template-columns: 1fr; }
+      .orb-broadsheet { min-height: 520px; }
+      .orb-core { width: min(88vw, 310px); top: 0; }
+      .edition-paper { width: min(100%, 360px); margin-top: 6.5rem; padding: 0.8rem; transform: rotate(-0.4deg); }
+      .paper-columns { grid-template-columns: 1fr; }
+      .paper-columns p:nth-of-type(2) { display: none; }
+      .paper-masthead strong { font-size: 2.1rem; }
+      .lead-story { min-height: auto; }
+      .lead-art { min-height: 150px; }
+      .dossier-grid, .npc-grid, .watch-items, .notice-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.35rem; padding: 0.9rem; }
+      section { padding: 3rem 0; }
+      .constellation-layer { opacity: 0.35; }
+    }
+
+    @media (max-width: 390px) {
+      .nav-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .brand-text span { display: none; }
+      .paper-note { display: none; }
+      .orb-broadsheet { min-height: 475px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>OffGridChoice</h1>
-    <nav>
-      <ul>
-        <li><a href="solar.html">Solar</a></li>
-        <li><a href="batteries.html">Batteries</a></li>
-        <li><a href="water.html">Water</a></li>
-        <li><a href="signals.html">Signals</a></li>
-      </ul>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="constellation-layer" aria-hidden="true">
+    <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+      <g opacity="0.75">
+        <circle cx="122" cy="126" r="2.8"/><circle cx="176" cy="150" r="2.2"/><circle cx="224" cy="113" r="2.4"/><circle cx="284" cy="160" r="2.1"/><circle cx="346" cy="132" r="3"/>
+        <line x1="122" y1="126" x2="176" y2="150"/><line x1="176" y1="150" x2="224" y2="113"/><line x1="224" y1="113" x2="284" y2="160"/><line x1="284" y1="160" x2="346" y2="132"/>
+        <text x="102" y="96">Tears of Selûne</text>
+      </g>
+      <g opacity="0.62">
+        <circle cx="835" cy="124" r="2.4"/><circle cx="892" cy="105" r="3"/><circle cx="936" cy="150" r="2.4"/><circle cx="978" cy="203" r="2.2"/><circle cx="870" cy="209" r="2.2"/><circle cx="813" cy="242" r="2.1"/><circle cx="758" cy="214" r="2.6"/>
+        <path d="M835 124 L892 105 L936 150 L978 203 M892 105 L870 209 L813 242 L758 214 M870 209 L936 150"/>
+        <text x="752" y="96">The Centaur</text>
+      </g>
+      <g opacity="0.56">
+        <circle cx="205" cy="710" r="2.2"/><circle cx="254" cy="660" r="2.7"/><circle cx="300" cy="610" r="2.3"/><circle cx="340" cy="565" r="3"/><circle cx="365" cy="652" r="2.4"/><circle cx="410" cy="703" r="2.1"/>
+        <path d="M205 710 L254 660 L300 610 L340 565 M300 610 L365 652 L410 703"/>
+        <text x="190" y="742">Sword and Dagger</text>
+      </g>
+    </svg>
+  </div>
+
+  <header class="site-header">
+    <nav class="nav-wrap" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="The Phandalin Orb home">
+        <span class="brand-seal" aria-hidden="true"></span>
+        <span class="brand-text">
+          <strong>The Phandalin Orb</strong>
+          <span>Secret wizard newspaper of the frontier</span>
+        </span>
+      </a>
+      <div class="nav-links">
+        <a href="#front-page">Front Page</a>
+        <a href="#notables">Notables</a>
+        <a href="#watch">Orb Watch</a>
+        <a href="#chronicle">Chronicle</a>
+        <a href="#notices">Notices</a>
+        <a href="#regions">Regions</a>
+      </div>
     </nav>
   </header>
 
-  <div class="hero">
-    <h2>Empower Your Off-Grid Journey</h2>
-    <p>Uncover the best in solar, water, and battery systems — backed by real insights.</p>
-  </div>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="page hero-grid">
+        <div class="hero-copy">
+          <div class="kicker"><span class="live-dot" aria-hidden="true"></span> Candlemark edition now visible</div>
+          <h1>The Orb <span>is Watching.</span></h1>
+          <p class="lede">
+            A hidden broadsheet for those who know where to look: one part tavern whisper,
+            one part arcane surveillance, one part frontier record. Its pages turn when Phandalin
+            sleeps, reflecting dragon-shadow, blood on inn floors, woodland omens, and the six names
+            now spoken whenever trouble survives long enough to become news.
+          </p>
+          <div class="hero-buttons" aria-label="Orb reading links">
+            <a class="button primary" href="#front-page">Read the Secret Front Page</a>
+            <a class="button secondary" href="#notables">Open the Notable Souls Dossier</a>
+          </div>
+          <div class="status-row" aria-label="Current regional status">
+            <div class="status"><span>Regional Threat</span><strong>Cryovain confirmed in the skies</strong></div>
+            <div class="status"><span>Town Temper</span><strong>Fearful, fascinated, heavily armed</strong></div>
+            <div class="status"><span>Hidden Thread</span><strong>Noctara bounty points beyond Phandalin</strong></div>
+          </div>
+        </div>
 
-  <section class="categories">
-    <div class="category">
-      <h3>Solar Power</h3>
-      <p>Top solar panels and kits to harness the sun.</p>
-      <a href="solar.html">Explore Solar</a>
-    </div>
-    <div class="category">
-      <h3>Battery Systems</h3>
-      <p>Reliable battery storage options for all needs.</p>
-      <a href="batteries.html">Explore Batteries</a>
-    </div>
-    <div class="category">
-      <h3>Water Purification</h3>
-      <p>Clean and safe water wherever you are.</p>
-      <a href="water.html">Explore Water</a>
-    </div>
-  </section>
+        <div class="orb-broadsheet" aria-label="Magical orb and secret newspaper display">
+          <div class="orb-glow" aria-hidden="true"></div>
+          <div class="orb-core" aria-hidden="true"></div>
+          <article class="edition-paper">
+            <div class="paper-masthead">
+              <small>Scryed, copied, and denied by responsible mages</small>
+              <strong>The Phandalin Orb</strong>
+            </div>
+            <div class="paper-columns">
+              <h2>White Dragon Terror Freezes the Frontier</h2>
+              <p>Witnesses near Umbrage Hill report a pale shape breaking through cloud and cold. The company returned frost-burned but alive.</p>
+              <p>Authorities remain calm in the way only locked doors can be calm. Travelers are advised to watch both road and sky.</p>
+              <span class="paper-stamp">Arcane circulation only</span>
+            </div>
+            <p class="paper-note"><strong>Orb whisper:</strong> The stars above Phandalin have begun arranging themselves into old names and bad omens.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-  <section class="recent-articles">
-    <h3>Latest Articles</h3>
-    <div class="article-list">
-      <!-- Placeholder for article cards; replace with real articles dynamically or statically -->
-      <div class="article-card">
-        <h4><a href="#">How to Choose a Solar Kit in 2025</a></h4>
-        <p>A practical guide to selecting the right solar power system for off-grid life.</p>
+    <section id="front-page">
+      <div class="page">
+        <div class="section-head">
+          <span class="section-label">Front Page</span>
+          <h2>Reports that appear only after the ink is warmed by spell-light.</h2>
+          <p>Written as a frontier broadsheet, corrected by rumor, and filed by whatever the Orb catches between the road, the inn, and the sky.</p>
+        </div>
+
+        <div class="front-grid">
+          <article class="lead-story">
+            <div class="lead-art" aria-hidden="true"></div>
+            <span class="story-rubric">Regional Menace</span>
+            <h3>White Terror Still Haunts the Skies Above Phandalin</h3>
+            <p>Travelers speak of sudden cold, scattered livestock, and the great pale shape of Cryovain crossing the clouds. The company’s return from Umbrage Hill has ended debate over whether the dragon is real; the new question is how close it will come next.</p>
+            <p class="byline">Filed from overheard accounts at Stonehill Inn</p>
+          </article>
+
+          <div class="story-stack">
+            <article class="secret-card" data-mark="N">
+              <time>Stonehill Inn · Night report</time>
+              <h3>Bounty Hunters Strike; Foreign Plot Suspected</h3>
+              <p>Steel was drawn in the inn after hunters came looking for Noctara alive. The attack has pushed private fear into public conversation.</p>
+            </article>
+            <article class="secret-card" data-mark="U">
+              <time>Umbrage Hill · Witness account</time>
+              <h3>Manticore Slain Near Adabra’s Windmill</h3>
+              <p>The healer remains at her post despite monster and dragon trouble. Some call that courage. Others call it the frontier’s particular madness.</p>
+            </article>
+            <article class="secret-card" data-mark="G">
+              <time>Gnomengarde · Sanitized royal bulletin</time>
+              <h3>Shapechanging Menace Exposed in Gnomish Halls</h3>
+              <p>Official statements are cheerful, contradictory, and full of inventions. The practical result is clear: the mimic is dead and the kings endured.</p>
+            </article>
+            <article class="secret-card" data-mark="W">
+              <time>Neverwinter Wood · Road whisper</time>
+              <h3>Woodland Omens Turn Hostile Near Logger Roads</h3>
+              <p>There is more than ordinary wilderness risk near the trees now. The Orb advises carts, horses, and heroes to expect watched paths.</p>
+            </article>
+          </div>
+        </div>
       </div>
-      <div class="article-card">
-        <h4><a href="#">Best Gravity Water Filters Ranked</a></h4>
-        <p>Compare the top gravity-fed water purifiers for durability, flow rate, and safety.</p>
+    </section>
+
+    <section id="notables">
+      <div class="page">
+        <div class="section-head">
+          <span class="section-label">Notable Souls Reflected</span>
+          <h2>The six names Phandalin cannot stop saying.</h2>
+          <p>The Orb keeps public dossiers on the company whose names now travel faster than any cart leaving Phandalin.</p>
+        </div>
+
+        <div class="dossier-grid">
+          <article class="dossier" data-initial="V"><span class="classline">The Company · Goliath Barbarian</span><h3>Vimak</h3><p>A towering survivor with greataxe, storm-rage, and a mimic tongue trophy. When Vimak returns battered and standing, Phandalin pays attention.</p><div class="sighting">Latest reflection: seen returning through repeated monster and orc trouble.</div></article>
+          <article class="dossier" data-initial="B"><span class="classline">The Company · Frontier Adventurer</span><h3>Baylen</h3><p>A central member of the company and a necessary name in every serious account of the party’s work across the frontier.</p><div class="sighting">Latest reflection: counted among the core survivors whose deeds now shape town gossip.</div></article>
+          <article class="dossier" data-initial="X"><span class="classline">The Company · Tabaxi Hunter</span><h3>Xandar</h3><p>Sharp-eyed, difficult to surprise, and already credited with spotting trouble before an orc ambush fully closed.</p><div class="sighting">Latest reflection: watching ridgelines, roads, and suspicious movement.</div></article>
+          <article class="dossier" data-initial="T"><span class="classline">The Company · Aasimar Druid</span><h3>Thorniel</h3><p>Marked by druidic power, complicated guilt, and the wild shape of something fierce when danger presses too close.</p><div class="sighting">Latest reflection: traveling with the company through increasingly hostile paths.</div></article>
+          <article class="dossier" data-initial="N"><span class="classline">The Company · Wanted Alive</span><h3>Noctara</h3><p>The subject of a dangerous bounty and the center of a hidden-city thread that points beyond normal Phandalin trouble.</p><div class="sighting">Latest reflection: surviving the Stonehill Inn attack while Vael Turog whispers grow darker.</div></article>
+          <article class="dossier" data-initial="Z"><span class="classline">The Company · Hunter with Wolf Companion</span><h3>Zariel</h3><p>Zariel entered the company’s story by tracking the escaped bounty hunter and bringing him back alive.</p><div class="sighting">Latest reflection: arriving at Stonehill Inn with a prisoner and a place beside the party.</div></article>
+        </div>
       </div>
-      <div class="article-card">
-        <h4><a href="#">12V Battery Bank Setup Tips</a></h4>
-        <p>Learn how to build, wire, and manage a safe 12V system for remote setups.</p>
+    </section>
+
+    <section id="watch">
+      <div class="page">
+        <div class="section-head">
+          <span class="section-label">Orb Watch</span>
+          <h2>The stars have begun answering.</h2>
+          <p>The Orb’s star-map is tuned to signs travelers actually fear: cold wind, moving shadows, old names, and roads that suddenly feel observed.</p>
+        </div>
+
+        <div class="watch-grid">
+          <aside class="orb-watch panel">
+            <h3>Current Arcane Readings</h3>
+            <p>The constellations do not predict the future cleanly. They lean. They brighten. They arrange themselves around the questions the frontier is afraid to ask.</p>
+            <div class="watch-items">
+              <div class="watch-item"><strong>Dragon-Sign</strong><span>Active cold omen across open roads.</span></div>
+              <div class="watch-item"><strong>Inn Safety</strong><span>Compromised after bounty hunter violence.</span></div>
+              <div class="watch-item"><strong>Woodland Edge</strong><span>Hostile pattern near Neverwinter Wood.</span></div>
+              <div class="watch-item"><strong>Hidden City</strong><span>Noctara thread partially obscured by old wards.</span></div>
+            </div>
+          </aside>
+
+          <div class="sky-map panel" aria-label="Faerûn-inspired constellation chart">
+            <svg viewBox="0 0 680 420" role="img" aria-labelledby="skyTitle skyDesc">
+              <title id="skyTitle">Orb star chart</title>
+              <desc id="skyDesc">Decorative constellation chart with Tears of Selune, the Centaur, and Sword and Dagger labels.</desc>
+              <circle cx="86" cy="72" r="3"/><circle cx="134" cy="96" r="2.4"/><circle cx="181" cy="65" r="2.8"/><circle cx="234" cy="108" r="2.3"/><circle cx="292" cy="84" r="3.1"/>
+              <line x1="86" y1="72" x2="134" y2="96"/><line x1="134" y1="96" x2="181" y2="65"/><line x1="181" y1="65" x2="234" y2="108"/><line x1="234" y1="108" x2="292" y2="84"/>
+              <text x="62" y="40">Tears of Selûne</text>
+
+              <circle cx="425" cy="86" r="2.5"/><circle cx="476" cy="68" r="3.2"/><circle cx="522" cy="112" r="2.6"/><circle cx="565" cy="168" r="2.4"/><circle cx="461" cy="174" r="2.5"/><circle cx="405" cy="209" r="2.3"/><circle cx="356" cy="183" r="2.6"/>
+              <path d="M425 86 L476 68 L522 112 L565 168 M476 68 L461 174 L405 209 L356 183 M461 174 L522 112"/>
+              <text x="412" y="38">The Centaur</text>
+
+              <circle cx="150" cy="322" r="2.4"/><circle cx="205" cy="273" r="2.9"/><circle cx="251" cy="224" r="2.4"/><circle cx="302" cy="180" r="3.1"/><circle cx="326" cy="264" r="2.5"/><circle cx="378" cy="317" r="2.3"/>
+              <path d="M150 322 L205 273 L251 224 L302 180 M251 224 L326 264 L378 317"/>
+              <text x="128" y="360">Sword and Dagger</text>
+
+              <path d="M530 300 C565 270 608 266 630 304 C596 302 574 326 542 346 C548 324 542 310 530 300Z" opacity="0.6"/>
+              <text x="515" y="382">bad omen crossing</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chronicle">
+      <div class="page">
+        <div class="section-head">
+          <span class="section-label">Sealed Chronicle</span>
+          <h2>What the Orb remembers, the road cannot bury.</h2>
+          <p>A sealed record of trouble survived, names repeated, and consequences still walking the roads around Phandalin.</p>
+        </div>
+        <div class="chronicle panel">
+          <article class="timeline-item"><div class="timeline-date">Arrival</div><div class="timeline-copy"><h3>Adventurers Reach Phandalin</h3><p>A new company arrives, takes work from the job board, gathers supplies, and steps onto roads already darkened by rumor.</p></div></article>
+          <article class="timeline-item"><div class="timeline-date">Excavation</div><div class="timeline-copy"><h3>Dwarven Ruins Cleared After Ooze and Orc Violence</h3><p>The company aids Dazlyn and Norbus, survives temple dangers, and faces an orc attack soon after.</p></div></article>
+          <article class="timeline-item"><div class="timeline-date">Umbrage Hill</div><div class="timeline-copy"><h3>Manticore Trouble Ends Beneath Dragon-Shadow</h3><p>Adabra’s windmill becomes the stage for a collision of threats: manticore, dragon-shadow, and frontier panic.</p></div></article>
+          <article class="timeline-item"><div class="timeline-date">Gnomengarde</div><div class="timeline-copy"><h3>Mimic Menace Revealed and Defeated</h3><p>Royal fear gives way to celebration after the shapechanging predator is discovered and destroyed.</p></div></article>
+          <article class="timeline-item"><div class="timeline-date">Stonehill Inn</div><div class="timeline-copy"><h3>Bounty Hunters Strike in the Night</h3><p>The attack reveals that Noctara is being hunted alive, and the name of a hidden city begins to matter.</p></div></article>
+          <article class="timeline-item"><div class="timeline-date">Morning After</div><div class="timeline-copy"><h3>Zariel Arrives with the Captured Hunter</h3><p>Zariel follows the trail from the ambush, captures the fleeing hunter, and enters the company’s story.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="regions">
+      <div class="page">
+        <div class="section-head">
+          <span class="section-label">Community Figures</span>
+          <h2>Not every important name is carried by a sword.</h2>
+          <p>The Orb keeps separate panes for the company, townsfolk, rulers, watchers, and names spoken only after the last cup is emptied.</p>
+        </div>
+        <div class="npc-grid">
+          <article class="npc"><strong>Toblen Stonehill</strong><span>Innkeeper</span><p>Provider of beds, meals, rumors, and increasingly serious window security.</p></article>
+          <article class="npc"><strong>Harbin Wester</strong><span>Townmaster</span><p>Local authority under pressure as danger follows roads, reports, and reward notices.</p></article>
+          <article class="npc"><strong>Adabra Gwynn</strong><span>Healer</span><p>Still at the windmill despite every reasonable argument against remaining there.</p></article>
+          <article class="npc"><strong>Dazlyn & Norbus</strong><span>Prospectors</span><p>Survivors of excavation trouble, temple danger, and the sort of luck dwarves brag about later.</p></article>
+          <article class="npc"><strong>King Korboz & King Gnerkli</strong><span>Gnomengarde</span><p>Royal gnomes whose halls survived mimic panic and strange machinery alike.</p></article>
+          <article class="npc"><strong>Halia Thornton</strong><span>Watching</span><p>A quiet local power taking a sharper interest in Noctara and the bounty hunter affair.</p></article>
+          <article class="npc"><strong>Eldric Thorne</strong><span>Hidden Guardian</span><p>A secretive wizard tied to Bluewatch Tower and old Vaeloran defenses.</p></article>
+          <article class="npc"><strong>Duke Malrec Voss</strong><span>Distant Threat</span><p>A name at the edge of Noctara’s story, Vael Turog’s politics, and darker ambitions.</p></article>
+          <article class="npc"><strong>Mother Briar</strong><span>Old Hunger</span><p>An ancient green hag whose bargains may shape dangers the town has not yet named.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="notices">
+      <div class="page">
+        <div class="section-head">
+          <span class="section-label">Town Notices</span>
+          <h2>Posted by hand, copied by cantrip, argued over by breakfast.</h2>
+          <p>The public board gathers warnings, pleas, and half-official rumors before anyone powerful admits they are real.</p>
+        </div>
+        <div class="notice-board">
+          <div class="notice-grid">
+            <article class="notice"><strong>Travelers Warned: Watch the Sky</strong><p>Any party leaving town should keep cover within sight when possible. Sudden cold wind may precede dragon-sign.</p><small>Townmaster’s Hall copy</small></article>
+            <article class="notice"><strong>Stonehill Inn Windows Being Secured</strong><p>After recent violence, additional locks and watchful eyes are being added. Guests are asked not to make clever jokes about it.</p><small>Posted by the inn</small></article>
+            <article class="notice"><strong>Questions Regarding Bounty Hunters</strong><p>Anyone with knowledge of strangers asking after Noctara should report suspicious offers of coin.</p><small>Copied by local hand</small></article>
+            <article class="notice"><strong>Roads Near the Woods Considered Risky</strong><p>Carts, horses, loggers, and hired guards should avoid traveling alone near Neverwinter Wood until further notice.</p><small>Frontier advisory</small></article>
+            <article class="notice"><strong>Prospectors Alive After Ruin Trouble</strong><p>Dazlyn and Norbus survived the excavation incident. Anyone claiming the ruins are harmless is invited to go first.</p><small>Heard at the inn</small></article>
+            <article class="notice"><strong>The Orb Seeks Confirmed Sightings</strong><p>Dragon, orc, woodland cult, strange lights, bounty agents, and unusual magical reports may be submitted for review.</p><small>Arcane notice</small></article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>The Phandalin Orb</strong>
+        <p>A discreet arcane broadsheet for those who know where to look. Reports are gathered from overheard testimony, warm ink, cautious witnesses, and reflections that should not be trusted too quickly.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#top">Return to Orb</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
       </div>
     </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 OffGridChoice. All rights reserved.</p>
-    <p>
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="terms.html">Terms of Service</a>
-    </p>
   </footer>
 </body>
 </html>
