@@ -1947,6 +1947,74 @@
       .mirror-wolf .mirror-face { clip-path: polygon(8% 4%, 92% 4%, 98% 18%, 93% 100%, 7% 100%, 2% 18%); }
       .account-asides { grid-template-columns: 1fr; }
     }
+
+
+    /* V7: mirrors are gateways, not full-page scrolls */
+    .mirror-open {
+      position: relative;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-start;
+      margin-top: 0.85rem;
+      padding: 0.42rem 0.58rem;
+      border: 1px solid rgba(247,237,207,0.34);
+      border-radius: 999px;
+      color: #fff3d0;
+      background: rgba(84,16,14,0.58);
+      box-shadow: 0 0 18px rgba(215,173,85,0.14);
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+    }
+
+    .mirror-card[aria-selected="true"] .mirror-open {
+      opacity: 1;
+      transform: translateY(0);
+      background: linear-gradient(180deg, rgba(142,31,26,0.92), rgba(84,16,14,0.92));
+    }
+
+    .mirror-card[aria-selected="true"] { cursor: pointer; }
+    .mirror-card:not([aria-selected="true"]) .mirror-open { pointer-events: none; }
+
+    .brief-account-body {
+      position: relative;
+    }
+
+    .account-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .account-link-secondary {
+      color: #2a170b;
+      background: linear-gradient(180deg, #ffe5a2, #c6923c);
+      border-color: rgba(92,50,19,0.28);
+    }
+
+    .mirror-ledger-link {
+      color: #2a170b;
+      background: linear-gradient(180deg, #ffe5a2, #c6923c);
+      border-color: rgba(255,239,193,0.5);
+    }
+
+    .mirror-ledger {
+      min-height: auto;
+    }
+
+    @media (max-width: 760px) {
+      .mirror-open { font-size: 0.56rem; padding: 0.36rem 0.46rem; }
+      .account-actions { flex-direction: column; }
+      .account-actions .account-link { width: 100%; }
+      .mirror-ledger-link { flex-basis: 100%; }
+    }
 </style>
 </head>
 <body>
@@ -2037,7 +2105,7 @@
 <div class="section-head">
 <span class="section-label">The Turning Mirror-Ring</span>
 <h2>Six enchanted mirrors turn upon the brass rail of the Orb.</h2>
-<p>Each glass keeps its own temperament, frame, omen, and flaw. Set one before the central eye, and the account inside opens with warm ink in the ledger.</p>
+<p>Side mirrors may be called forward. The centered glass may be opened. The brief reflection below shows only the first shimmer; the sealed account waits beyond the glass.</p>
 </div>
 <div class="mirror-ring-shell">
 <div aria-label="A ring of enchanted mirrors bearing six reflected accounts" class="mirror-stage" data-active="cryovain" id="mirrorStage" tabindex="0">
@@ -2045,118 +2113,40 @@
 <div><strong>Orb Focus</strong><span id="orbWhisperFocus">Cold light gathers first; six accounts wait their turn in the glass.</span></div>
 </div>
 <div class="mirror-track" id="mirrorTrack">
-<button aria-selected="true" class="mirror-card mirror-frost" data-omen="cold crown above Icespire" data-story="cryovain" data-whisper="The frost-glass clouds at the edges. Somewhere high above, white wings beat once." type="button">
-<div class="mirror-face" data-gleam="❄"><span aria-hidden="true" class="mirror-crest">❄</span><span class="mirror-tag">Dragon-Sign</span><h3>White Terror Still Haunts the Skies Above Phandalin</h3><p>Frost crawls along silver glass as pale wings cut the cloud-road above Phandalin.</p></div>
+<button aria-label="White Terror Still Haunts the Skies Above Phandalin — set this glass before the Orb; open when centered" aria-selected="true" class="mirror-card mirror-frost" data-omen="cold crown above Icespire" data-story="cryovain" data-url="articles/white-terror-skies-phandalin.html" data-whisper="The frost-glass clouds at the edges. Somewhere high above, white wings beat once." type="button">
+<div class="mirror-face" data-gleam="❄"><span aria-hidden="true" class="mirror-crest">❄</span><span class="mirror-tag">Dragon-Sign</span><h3>White Terror Still Haunts the Skies Above Phandalin</h3><p>Frost crawls along silver glass as pale wings cut the cloud-road above Phandalin.</p><span class="mirror-open">Open the Full Account</span></div>
 </button>
-<button aria-selected="false" class="mirror-card mirror-iron" data-omen="a chain drawn toward the sea" data-story="bounty" data-whisper="The iron mirror clicks like a lock. Red wax softens, and a hunter’s oath bleeds through." type="button">
-<div class="mirror-face" data-gleam="⛓"><span aria-hidden="true" class="mirror-crest">⛓</span><span class="mirror-tag">Sealed Warrant</span><h3>Bounty Hunters Strike; Foreign Plot Suspected</h3><p>Black iron, chain-shadow, and red wax reflect the price placed on a living name.</p></div>
+<button aria-label="Bounty Hunters Strike; Foreign Plot Suspected — set this glass before the Orb; open when centered" aria-selected="false" class="mirror-card mirror-iron" data-omen="a chain drawn toward the sea" data-story="bounty" data-url="articles/bounty-hunters-foreign-plot.html" data-whisper="The iron mirror clicks like a lock. Red wax softens, and a hunter’s oath bleeds through." type="button">
+<div class="mirror-face" data-gleam="⛓"><span aria-hidden="true" class="mirror-crest">⛓</span><span class="mirror-tag">Sealed Warrant</span><h3>Bounty Hunters Strike; Foreign Plot Suspected</h3><p>Black iron, chain-shadow, and red wax reflect the price placed on a living name.</p><span class="mirror-open">Open the Full Account</span></div>
 </button>
-<button aria-selected="false" class="mirror-card mirror-bronze" data-omen="lantern over Umbrage Hill" data-story="manticore" data-whisper="Warm lantern-light enters the glass. A windmill turns once against a troubled sky." type="button">
-<div class="mirror-face" data-gleam="☉"><span aria-hidden="true" class="mirror-crest">☉</span><span class="mirror-tag">Windmill Witness</span><h3>Manticore Slain Near Adabra’s Windmill</h3><p>Bronze herbs and feather-scratches frame a hill where courage outstayed good sense.</p></div>
+<button aria-label="Manticore Slain Near Adabra’s Windmill — set this glass before the Orb; open when centered" aria-selected="false" class="mirror-card mirror-bronze" data-omen="lantern over Umbrage Hill" data-story="manticore" data-url="articles/manticore-slain-adabras-windmill.html" data-whisper="Warm lantern-light enters the glass. A windmill turns once against a troubled sky." type="button">
+<div class="mirror-face" data-gleam="☉"><span aria-hidden="true" class="mirror-crest">☉</span><span class="mirror-tag">Windmill Witness</span><h3>Manticore Slain Near Adabra’s Windmill</h3><p>Bronze herbs and feather-scratches frame a hill where courage outstayed good sense.</p><span class="mirror-open">Open the Full Account</span></div>
 </button>
-<button aria-selected="false" class="mirror-card mirror-gnome" data-omen="teeth behind clever stone" data-story="mimic" data-whisper="The brass mirror stutters, grinds, then grins. Nothing in Gnomengarde stays still for long." type="button">
-<div class="mirror-face" data-gleam="◇"><span aria-hidden="true" class="mirror-crest">◇</span><span class="mirror-tag">Gnomish Bulletin</span><h3>Shapechanging Menace Exposed in Gnomish Halls</h3><p>Brass gears shiver around a crooked pane where stone, teeth, and celebration traded masks.</p></div>
+<button aria-label="Shapechanging Menace Exposed in Gnomish Halls — set this glass before the Orb; open when centered" aria-selected="false" class="mirror-card mirror-gnome" data-omen="teeth behind clever stone" data-story="mimic" data-url="articles/shapechanging-menace-gnomengarde.html" data-whisper="The brass mirror stutters, grinds, then grins. Nothing in Gnomengarde stays still for long." type="button">
+<div class="mirror-face" data-gleam="◇"><span aria-hidden="true" class="mirror-crest">◇</span><span class="mirror-tag">Gnomish Bulletin</span><h3>Shapechanging Menace Exposed in Gnomish Halls</h3><p>Brass gears shiver around a crooked pane where stone, teeth, and celebration traded masks.</p><span class="mirror-open">Open the Full Account</span></div>
 </button>
-<button aria-selected="false" class="mirror-card mirror-thorn" data-omen="roots crossing the road" data-story="woods" data-whisper="The thorn-glass darkens green. Leaves turn their pale undersides toward something listening." type="button">
-<div class="mirror-face" data-gleam="♧"><span aria-hidden="true" class="mirror-crest">♧</span><span class="mirror-tag">Woodland Omen</span><h3>Woodland Omens Turn Hostile Near Logger Roads</h3><p>Darkwood roots grip the glass as branch-shadows move without the courtesy of wind.</p></div>
+<button aria-label="Woodland Omens Turn Hostile Near Logger Roads — set this glass before the Orb; open when centered" aria-selected="false" class="mirror-card mirror-thorn" data-omen="roots crossing the road" data-story="woods" data-url="articles/woodland-omens-logger-roads.html" data-whisper="The thorn-glass darkens green. Leaves turn their pale undersides toward something listening." type="button">
+<div class="mirror-face" data-gleam="♧"><span aria-hidden="true" class="mirror-crest">♧</span><span class="mirror-tag">Woodland Omen</span><h3>Woodland Omens Turn Hostile Near Logger Roads</h3><p>Darkwood roots grip the glass as branch-shadows move without the courtesy of wind.</p><span class="mirror-open">Open the Full Account</span></div>
 </button>
-<button aria-selected="false" class="mirror-card mirror-wolf" data-omen="wolf-path beneath dawn" data-story="zariel" data-whisper="Moon-amber burns inside the hunting glass. A wolf’s breath fogs the lower edge." type="button">
-<div class="mirror-face" data-gleam="☾"><span aria-hidden="true" class="mirror-crest">☾</span><span class="mirror-tag">Dawn Capture</span><h3>Zariel Arrives with the Captured Hunter</h3><p>Leather, moon-amber, and wolf-silver hold the trail of one fleeing man brought back breathing.</p></div>
+<button aria-label="Zariel Arrives with the Captured Hunter — set this glass before the Orb; open when centered" aria-selected="false" class="mirror-card mirror-wolf" data-omen="wolf-path beneath dawn" data-story="zariel" data-url="articles/zariel-captured-hunter.html" data-whisper="Moon-amber burns inside the hunting glass. A wolf’s breath fogs the lower edge." type="button">
+<div class="mirror-face" data-gleam="☾"><span aria-hidden="true" class="mirror-crest">☾</span><span class="mirror-tag">Dawn Capture</span><h3>Zariel Arrives with the Captured Hunter</h3><p>Leather, moon-amber, and wolf-silver hold the trail of one fleeing man brought back breathing.</p><span class="mirror-open">Open the Full Account</span></div>
 </button>
 </div>
 <div aria-label="Turn the enchanted mirror ring" class="mirror-controls">
 <button class="mirror-control" id="mirrorPrev" type="button">Turn the Ring West</button>
 <button aria-pressed="false" class="mirror-control" id="mirrorPause" type="button">Still the Ring</button>
 <button class="mirror-control" id="mirrorNext" type="button">Turn the Ring East</button>
-</div>
+<a class="mirror-control mirror-ledger-link" href="articles.html">Open the Arcane Ledger</a></div>
 <div aria-label="Set the chosen glass before the Orb" class="mirror-dots" id="mirrorDots"></div>
 </div>
 <div class="mirror-ledger panel" id="mirrorLedger">
-<div class="ledger-head"><span>Account Open in the Glass</span><h3 id="ledgerTitle">White Terror Still Haunts the Skies Above Phandalin</h3></div>
-<article class="mirror-account active" data-account="cryovain" data-title="White Terror Still Haunts the Skies Above Phandalin">
-<span class="account-rubric">Regional Menace · Filed from chilled testimony</span>
-<h4>White Terror Still Haunts the Skies Above Phandalin</h4>
-<div class="account-body">
-<p>The first witnesses spoke softly enough that some dismissed them as road-shaken liars: a white shape above the clouds, a breath of winter on a warm day, livestock scattered as though thunder had grown claws. Such tales are common wherever taverns stand near dangerous roads. Yet the company’s return from Umbrage Hill has ended the comfortable habit of disbelief.</p>
-<p>They came back bearing the signs no sensible person invents. Cloaks stiffened with frost. Faces marked by cold-burn. Eyes turned too often toward open sky. The name now spoken over mugs and behind shuttered windows is Cryovain, and each repetition seems to lower the room’s temperature.</p>
-<p>Those near Adabra Gwynn’s lonely windmill describe a pale dragon stooping through cloud, its wings cutting the day into terror and shadow. One account claims even the manticore harassing the hill struck at the dragon before turning its fury elsewhere. Another insists the dragon’s passing silenced every bird at once. The Orb cannot swear to either detail, but both have the shape of true fear.</p>
-<p>Townmaster’s Hall offers no comfort beyond locked doors and reward notices. Travelers are advised to keep tree lines, low ground, and stone cover within sight. Merchants now look at the sky before counting coin. Children have begun drawing white wings in hearth ash. Phandalin has survived orcs, ruins, and hungry things before, but a dragon changes the size of every question.</p>
-<p>If the beast has chosen Icespire Peak as its crown, then the frontier now lives beneath a throne of snow. The roads remain open, but no road is empty. Every cartwheel creak, every sudden wind, every cloud too bright against the sun now carries the same whispered question: how close will Cryovain come next?</p>
-<aside class="account-asides"><div class="account-aside"><strong>Witness line</strong><span>“Even the birds went quiet before the cold reached us.”</span></div><div class="account-aside"><strong>Orb certainty</strong><span>Confirmed by frost, fear, and too many skyward glances.</span></div></aside><span class="account-seal">Sealed by cold light</span>
-<a class="account-link" href="articles/white-terror-skies-phandalin.html">Open the full account</a>
-</div>
-</article>
-<article class="mirror-account" data-account="bounty" data-title="Bounty Hunters Strike; Foreign Plot Suspected">
-<span class="account-rubric">Stonehill Inn · Night report copied before dawn</span>
-<h4>Bounty Hunters Strike; Foreign Plot Suspected</h4>
-<div class="account-body">
-<p>Stonehill Inn has long been the sort of place where fear pauses at the door, shakes mud from its boots, and pretends to be ordinary road fatigue. That comfort broke in the night when armed strangers came looking for Noctara.</p>
-<p>The attack was not the work of drunk blades or desperate thieves. The hunters carried purpose. They wanted her alive. That single fact has done more to unsettle Phandalin than the bodies themselves. A dead enemy is simple. A living captive suggests payment, questioning, transport, and a distant hand waiting to close.</p>
-<p>By morning, the inn had become a room of lowered voices. Toblen Stonehill moved through the common room with the weary anger of a man measuring every window and wondering what kind of lock keeps out politics. The company had already returned battered by frost and road danger. Now danger had crossed the threshold and found them in their beds.</p>
-<p>The captured hunter’s words, gathered through trembling confession and sharper interrogation, point toward the hidden city called Vael Turog and the name Duke Malrec Voss. Whether every syllable is truth or cowardice wrapped in truth remains for wiser souls to determine. Yet the bounty’s shape is clear enough: Noctara is wanted, not merely hated.</p>
-<p>There are whispers of a directorate that buys knives, of soldiers who serve a distant throne, and of old wards that steal memory from those who leave the city too long. These matters belong in locked rooms and behind warded doors, but Phandalin is small. Secrets brought here bleed through floorboards.</p>
-<p>Halia Thornton has been seen listening more than speaking. Harbin Wester is said to be deeply disturbed that such hunters found their way into town at all. The Orb records this plainly: whatever hunts Noctara has learned the road to Phandalin, and the next offer of coin may already be traveling west.</p>
-<aside class="account-asides"><div class="account-aside"><strong>Witness line</strong><span>“They did not ask whether she was guilty. They asked whether she was breathing.”</span></div><div class="account-aside"><strong>Orb certainty</strong><span>Confirmed by blood on boards and one prisoner’s trembling mouth.</span></div></aside><span class="account-seal">Copied under barred windows</span>
-<a class="account-link" href="articles/bounty-hunters-foreign-plot.html">Open the full account</a>
-</div>
-</article>
-<article class="mirror-account" data-account="manticore" data-title="Manticore Slain Near Adabra’s Windmill">
-<span class="account-rubric">Umbrage Hill · Witness account and hill rumor</span>
-<h4>Manticore Slain Near Adabra’s Windmill</h4>
-<div class="account-body">
-<p>Adabra Gwynn’s windmill stands where sensible walls do not: exposed, stubborn, and visible from far enough away for fear to make plans before arrival. It has become one of those frontier places where everyone agrees a person should leave, and everyone knows the person will not.</p>
-<p>The creature harassing the hill was no ordinary beast. The manticore came hungry, winged, and loud with the arrogance of something used to frightening smaller lives into surrender. It found, instead, a company already walking through a day thick with danger.</p>
-<p>Accounts differ in the order of events because terror rarely keeps tidy minutes. Some say the white dragon appeared first, a pale horror crossing the sky and drawing the manticore’s fury. Others say the manticore’s threat to the windmill had already become urgent when the shadow passed overhead. All agree that the hill briefly belonged to too many monsters at once.</p>
-<p>The company fought. Steel, spell, tooth, claw, and desperate timing turned what might have been a funeral into another tale told loudly at Stonehill Inn. By the end, the manticore lay dead, and Adabra remained alive inside the very windmill everyone keeps advising her to abandon.</p>
-<p>There is local disagreement on what this proves. Some call Adabra brave. Some call her impossible. Some say the company’s arrival was luck, and others answer that luck tends to follow those willing to stand between a healer and a monster.</p>
-<p>The Orb offers this judgment: Umbrage Hill is no longer merely a lonely rise with a windmill. It is a place where the frontier showed its teeth from land and sky at once, and where the company began to understand that the dragon is not waiting politely at the end of the road. It is already part of the weather.</p>
-<aside class="account-asides"><div class="account-aside"><strong>Witness line</strong><span>“Adabra stayed where even the wind seemed eager to leave.”</span></div><div class="account-aside"><strong>Orb certainty</strong><span>Confirmed by hillfolk, healing draughts, and manticore silence.</span></div></aside><span class="account-seal">Pressed with windmill dust</span>
-<a class="account-link" href="articles/manticore-slain-adabras-windmill.html">Open the full account</a>
-</div>
-</article>
-<article class="mirror-account" data-account="mimic" data-title="Shapechanging Menace Exposed in Gnomish Halls">
-<span class="account-rubric">Gnomengarde · Sanitized royal bulletin with stains beneath</span>
-<h4>Shapechanging Menace Exposed in Gnomish Halls</h4>
-<div class="account-body">
-<p>Any report out of Gnomengarde must first survive invention, optimism, frightened royalty, and at least three devices nobody should have wound. The Orb therefore presents the following account with appropriate caution and a respect for gnomish enthusiasm.</p>
-<p>The settlement had fallen into suspicion after disappearances, strange signs, and royal panic turned ordinary confusion into a locked-room dread. King Korboz and King Gnerkli, whose authority survived mostly by being defended from inside their own chambers, required proof that the unseen menace had been ended.</p>
-<p>The company found the thing where a careless eye might have found nothing at all. Disguised as the back wall of a chamber, the creature waited in plain sight with the patience of furniture and the appetite of a predator. A mimic is a lesson in distrust: not every wall is a wall, not every chest is a chest, and not every silence is empty.</p>
-<p>The fight was close enough that those retelling it have already begun polishing the danger into legend. What matters is simpler. The mimic died. Vimak kept a trophy from it. The kings were convinced. Gnomengarde, which had held its breath through fear and contraption alike, exhaled into celebration.</p>
-<p>Official gnomish statements describe the resolution as orderly, triumphant, and evidence of excellent institutional preparedness. Less official versions include random crossbow fire, secret routes, royal anxiety, and at least one person insisting the back wall looked suspicious only after it tried to eat someone.</p>
-<p>Let scholars argue what such a creature wanted in those halls. Let inventors insist everything functioned as designed. The Orb records the practical truth: the company entered a place of hidden teeth, found the lie wearing stone as a face, and left behind a settlement loud enough to be grateful.</p>
-<aside class="account-asides"><div class="account-aside"><strong>Witness line</strong><span>“The wall was not a wall. That is the useful part of the report.”</span></div><div class="account-aside"><strong>Orb certainty</strong><span>Confirmed by gnomish relief and royal contradiction.</span></div></aside><span class="account-seal">Stamped after celebration</span>
-<a class="account-link" href="articles/shapechanging-menace-gnomengarde.html">Open the full account</a>
-</div>
-</article>
-<article class="mirror-account" data-account="woods" data-title="Woodland Omens Turn Hostile Near Logger Roads">
-<span class="account-rubric">Neverwinter Wood · Road whisper and river warning</span>
-<h4>Woodland Omens Turn Hostile Near Logger Roads</h4>
-<div class="account-body">
-<p>The roads near Neverwinter Wood have always had their own manners. Branches lean too close. Birds stop singing for reasons no traveler likes. Even horses with strong backs and empty heads understand that some tree lines are better passed before dusk.</p>
-<p>Recent signs are less ordinary. The trouble near the logger roads does not feel like wolves, weather, or the common cruelty of wild ground. It feels watched. It feels answered. It feels as though the woods have taken offense and found hands willing to carry that offense into the open.</p>
-<p>Loggers whisper of unease around camp and movement where no hired guard stood. The company’s path brought them close enough to disturb whatever temper has been gathering beneath the boughs. One account speaks of a boar that was not merely a boar, another of pain striking the mind before the creature fled to warn deeper powers. The Orb keeps such details marked in red until further signs confirm them.</p>
-<p>The name spoken by those with old knowledge is anchorite: servants of storm, fang, and woodland wrath. Whether these figures act from their own hatred, from obedience to a greater power, or from some bargain rooted in Neverwinter Wood, the effect is the same. The routes once treated as inconvenient are becoming hostile.</p>
-<p>Beaver and Badger, the friendly and notably wind-troubled horses seen drawing the company’s cart, may know more about the way home than certain travelers. Those who can speak with beasts are advised to listen when beasts prefer a road, refuse a road, or stare too long between trees.</p>
-<p>The dragon owns the sky, but the woods own the spaces where wings cannot reach. Phandalin must now reckon with both. A frontier can endure one great threat if it knows where to face. It grows harder when danger learns to arrive from above, behind, and beneath the leaves.</p>
-<aside class="account-asides"><div class="account-aside"><strong>Witness line</strong><span>“The road felt watched before the trees even moved.”</span></div><div class="account-aside"><strong>Orb certainty</strong><span>Seen through cracked glass; supported by hoof, cart, and campfire unease.</span></div></aside><span class="account-seal">Tied with green-black thread</span>
-<a class="account-link" href="articles/woodland-omens-logger-roads.html">Open the full account</a>
-</div>
-</article>
-<article class="mirror-account" data-account="zariel" data-title="Zariel Arrives with the Captured Hunter">
-<span class="account-rubric">Morning After · Account from the inn doors</span>
-<h4>Zariel Arrives with the Captured Hunter</h4>
-<div class="account-body">
-<p>Morning at Stonehill Inn should have smelled of bread, smoke, spilled ale, and the ordinary relief of having survived one more night. Instead it carried the sour edge of blood cleaned too quickly and questions nobody had finished asking.</p>
-<p>Then Zariel arrived.</p>
-<p>Those who saw her enter describe a figure marked by the road, accompanied by the presence of a wolf and the practical silence of someone who has already done the hard part before breakfast. With her came the hunter who had fled the night’s violence, no longer running, no longer boasting, and very much alive.</p>
-<p>The trail had begun in the confusion after the attack. While Phandalin slept poorly and the inn tried to understand what had happened inside its own walls, Zariel followed the shape of escape: disturbed ground, hurried passage, the faint cowardice of a man who thought distance could become mercy. Her wolf helped close the night around him.</p>
-<p>The fight, by all accounts, was brief. The hunter was taken alive, which is more consideration than his employer’s coin deserved. Dragged or driven back toward town, he became the morning’s most unwelcome proof that the attack was not random. A dead man leaves questions. A prisoner leaves answers, excuses, and fear.</p>
-<p>In the common room, the company gained more than a captive. They gained a new presence beside them, one whose arrival tied the previous night’s violence to the road beyond town. Zariel did not enter as rumor. She entered with evidence.</p>
-<p>Phandalin has a habit of measuring people by what follows them through the door. Some bring mud. Some bring debts. Zariel brought back the man who ran, and with him another piece of the shadow reaching for Noctara. The Orb marks her name among the company’s six.</p>
-<aside class="account-asides"><div class="account-aside"><strong>Witness line</strong><span>“She brought him in alive, which is more mercy than the night had shown.”</span></div><div class="account-aside"><strong>Orb certainty</strong><span>Confirmed by prisoner, wolf-tracks, and breakfast interrupted.</span></div></aside><span class="account-seal">Witnessed before breakfast</span>
-<a class="account-link" href="articles/zariel-captured-hunter.html">Open the full account</a>
-</div>
-</article>
+<div class="ledger-head"><span>Brief Reflection in the Glass</span><h3 id="ledgerTitle">White Terror Still Haunts the Skies Above Phandalin</h3></div>
+<article class="mirror-account active" data-account="cryovain" data-title="White Terror Still Haunts the Skies Above Phandalin"><span class="account-rubric">Brief Reflection · Regional Menace</span><h4>White Terror Still Haunts the Skies Above Phandalin</h4><div class="account-body brief-account-body"><p>The frost-glass gives only the nearest truth: Cryovain is no tavern invention. Witnesses near Umbrage Hill describe pale wings cutting through cloud, sudden cold on a fair day, and travelers returning with cloaks stiffened by ice.</p><p>The full account names the places fear has touched, the testimony gathered at Stonehill Inn, and the reason every road now begins with a glance toward the sky.</p><span class="account-seal">Confirmed by frost-burned cloth and frightened tongues</span><div class="account-actions"><a class="account-link" href="articles/white-terror-skies-phandalin.html">Open the Full Account</a><a class="account-link account-link-secondary" href="articles.html">Open the Arcane Ledger</a></div></div></article>
+<article class="mirror-account" data-account="bounty" data-title="Bounty Hunters Strike; Foreign Plot Suspected"><span class="account-rubric">Brief Reflection · Sealed Warrant</span><h4>Bounty Hunters Strike; Foreign Plot Suspected</h4><div class="account-body brief-account-body"><p>The iron mirror opens on blood scrubbed too quickly from an inn floor. Armed strangers came to Phandalin looking for Noctara alive, and the coin behind their courage points farther than any local grudge.</p><p>The full account follows the attack, the question of who paid for it, and the shadow of a hidden city now pressing against the town’s warmest room.</p><span class="account-seal">Heard under ale, fear, and red wax</span><div class="account-actions"><a class="account-link" href="articles/bounty-hunters-foreign-plot.html">Open the Full Account</a><a class="account-link account-link-secondary" href="articles.html">Open the Arcane Ledger</a></div></div></article>
+<article class="mirror-account" data-account="manticore" data-title="Manticore Slain Near Adabra’s Windmill"><span class="account-rubric">Brief Reflection · Windmill Witness</span><h4>Manticore Slain Near Adabra’s Windmill</h4><div class="account-body brief-account-body"><p>Bronze light catches on Umbrage Hill, where Adabra Gwynn remains stubbornly at her windmill and a manticore’s threat has at last been ended. Even victory there feels uneasy beneath dragon-shadow.</p><p>The full account gathers hill gossip, healer stubbornness, and the strange collision of winged threats that made the windmill a mark on every nervous map.</p><span class="account-seal">Seen from the hill and repeated at the inn</span><div class="account-actions"><a class="account-link" href="articles/manticore-slain-adabras-windmill.html">Open the Full Account</a><a class="account-link account-link-secondary" href="articles.html">Open the Arcane Ledger</a></div></div></article>
+<article class="mirror-account" data-account="mimic" data-title="Shapechanging Menace Exposed in Gnomish Halls"><span class="account-rubric">Brief Reflection · Gnomish Bulletin</span><h4>Shapechanging Menace Exposed in Gnomish Halls</h4><div class="account-body brief-account-body"><p>The brass glass stutters between invention and alarm. In Gnomengarde, royal fear, hidden teeth, and impossible machinery produced a report that no sober scribe would call tidy.</p><p>The full account separates celebration from panic, stone from hunger, and the official cheer from the shapechanging thing that caused it all.</p><span class="account-seal">Approved by no device currently smoking</span><div class="account-actions"><a class="account-link" href="articles/shapechanging-menace-gnomengarde.html">Open the Full Account</a><a class="account-link account-link-secondary" href="articles.html">Open the Arcane Ledger</a></div></div></article>
+<article class="mirror-account" data-account="woods" data-title="Woodland Omens Turn Hostile Near Logger Roads"><span class="account-rubric">Brief Reflection · Woodland Omen</span><h4>Woodland Omens Turn Hostile Near Logger Roads</h4><div class="account-body brief-account-body"><p>The thorn-glass darkens along the roads near Neverwinter Wood. Travelers speak of watched paths, uneasy horses, and branches that seem to lean closer when names are spoken aloud.</p><p>The full account follows the logger roads, the warning signs near the trees, and the sense that the forest now holds intention rather than mere wilderness.</p><span class="account-seal">Read in root-shadow and hoof-restlessness</span><div class="account-actions"><a class="account-link" href="articles/woodland-omens-logger-roads.html">Open the Full Account</a><a class="account-link account-link-secondary" href="articles.html">Open the Arcane Ledger</a></div></div></article>
+<article class="mirror-account" data-account="zariel" data-title="Zariel Arrives with the Captured Hunter"><span class="account-rubric">Brief Reflection · Dawn Capture</span><h4>Zariel Arrives with the Captured Hunter</h4><div class="account-body brief-account-body"><p>Amber glass shows a trail taken before breakfast: one fleeing bounty hunter, one wolf at the edge of the path, and Zariel bringing the living answer back to Stonehill Inn.</p><p>The full account tells how she followed the violence, found the escapee, and entered the company’s story with a prisoner instead of a rumor.</p><span class="account-seal">Confirmed by dawn, mud, and a breathing captive</span><div class="account-actions"><a class="account-link" href="articles/zariel-captured-hunter.html">Open the Full Account</a><a class="account-link account-link-secondary" href="articles.html">Open the Arcane Ledger</a></div></div></article>
 </div>
 </div>
 </div>
@@ -2442,11 +2432,14 @@
 
       cards.forEach((card, index) => {
         card.addEventListener("click", () => {
+          if (index === activeIndex && card.dataset.url) {
+            window.location.href = card.dataset.url;
+            return;
+          }
           showStory(index);
           stopTurning();
           startTurning();
         });
-        card.addEventListener("focus", () => showStory(index));
       });
 
       if (prev) prev.addEventListener("click", () => { showStory(activeIndex - 1); stopTurning(); startTurning(); });
