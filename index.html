@@ -1092,6 +1092,370 @@
       font-size: 0.9rem;
     }
 
+
+
+    .mirror-ring-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .mirror-stage {
+      position: relative;
+      min-height: 640px;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      padding: 1rem;
+      border: 1px solid rgba(215,173,85,0.24);
+      background:
+        radial-gradient(circle at 50% 42%, rgba(155,232,255,0.16), transparent 15rem),
+        radial-gradient(circle at 50% 42%, rgba(142,31,26,0.22), transparent 29rem),
+        linear-gradient(180deg, rgba(8,10,18,0.88), rgba(30,15,12,0.84));
+      box-shadow: 0 24px 70px rgba(0,0,0,0.42), inset 0 0 50px rgba(215,173,85,0.04);
+    }
+
+    .mirror-stage::before {
+      content: "";
+      position: absolute;
+      inset: 1rem;
+      border: 1px solid rgba(215,173,85,0.16);
+      border-radius: 0.9rem;
+      pointer-events: none;
+    }
+
+    .mirror-center {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      transform: translate(-50%, -50%);
+      width: min(54vw, 235px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #fff3c5;
+      padding: 1.4rem;
+      background:
+        radial-gradient(circle at 38% 24%, rgba(255,255,255,0.85) 0 7%, rgba(155,232,255,0.64) 14%, transparent 31%),
+        radial-gradient(circle at 50% 50%, rgba(78,174,206,0.82), rgba(22,51,79,0.9) 50%, rgba(5,6,12,0.96) 74%);
+      border: 1px solid rgba(247,237,207,0.34);
+      box-shadow:
+        0 0 34px rgba(155,232,255,0.48),
+        0 0 110px rgba(155,232,255,0.18),
+        inset -20px -25px 44px rgba(0,0,0,0.45);
+      z-index: 5;
+    }
+
+    .mirror-center strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #fff8d9;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .mirror-center span {
+      display: block;
+      color: rgba(247,237,207,0.74);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .mirror-track {
+      position: absolute;
+      inset: 0;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+
+    .mirror-card {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: min(42vw, 260px);
+      min-height: 220px;
+      padding: 0;
+      color: var(--ink);
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 520ms ease, opacity 520ms ease, filter 520ms ease;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .mirror-face {
+      position: relative;
+      min-height: 220px;
+      padding: 0.95rem;
+      border-radius: 48% 48% 0.85rem 0.85rem / 28% 28% 0.85rem 0.85rem;
+      background:
+        linear-gradient(180deg, rgba(225,249,255,0.82), rgba(127,178,189,0.62) 42%, rgba(33,39,48,0.92) 43%, rgba(16,12,15,0.96) 100%);
+      border: 4px solid rgba(215,173,85,0.52);
+      box-shadow:
+        0 18px 44px rgba(0,0,0,0.5),
+        inset 0 0 24px rgba(255,255,255,0.2),
+        0 0 24px rgba(155,232,255,0.12);
+      overflow: hidden;
+    }
+
+    .mirror-face::before {
+      content: "";
+      position: absolute;
+      inset: 0.45rem;
+      border-radius: 46% 46% 0.55rem 0.55rem / 25% 25% 0.55rem 0.55rem;
+      border: 1px solid rgba(247,237,207,0.36);
+      pointer-events: none;
+    }
+
+    .mirror-face::after {
+      content: attr(data-gleam);
+      position: absolute;
+      right: 0.55rem;
+      bottom: -0.2rem;
+      color: rgba(247,237,207,0.08);
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mirror-card[aria-selected="true"] .mirror-face {
+      border-color: rgba(255,225,155,0.92);
+      box-shadow:
+        0 20px 55px rgba(0,0,0,0.56),
+        0 0 34px rgba(215,173,85,0.24),
+        0 0 60px rgba(155,232,255,0.16),
+        inset 0 0 28px rgba(255,255,255,0.26);
+    }
+
+    .mirror-tag {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      padding: 0.28rem 0.44rem;
+      margin-bottom: 0.55rem;
+      color: #ffefbd;
+      background: rgba(84,16,14,0.74);
+      border: 1px solid rgba(247,237,207,0.24);
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .mirror-face h3 {
+      position: relative;
+      z-index: 2;
+      margin: 0 0 0.42rem;
+      color: #fff6cd;
+      font-size: 1.18rem;
+      line-height: 1.06;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.65);
+    }
+
+    .mirror-face p {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      color: rgba(247,237,207,0.74);
+      font-size: 0.86rem;
+      line-height: 1.42;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+    }
+
+    .mirror-controls {
+      position: absolute;
+      left: 1.1rem;
+      right: 1.1rem;
+      bottom: 1.1rem;
+      z-index: 12;
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .mirror-control,
+    .account-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0.68rem 0.88rem;
+      color: #fff3d0;
+      border: 1px solid rgba(247,237,207,0.28);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(142,31,26,0.92), rgba(84,16,14,0.92));
+      box-shadow: 0 12px 30px rgba(0,0,0,0.34);
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .mirror-control:hover,
+    .mirror-control:focus-visible,
+    .account-link:hover,
+    .account-link:focus-visible {
+      outline: none;
+      box-shadow: 0 0 28px rgba(215,173,85,0.22), 0 14px 36px rgba(0,0,0,0.42);
+    }
+
+    .mirror-ledger {
+      padding: clamp(1rem, 2.5vw, 1.4rem);
+      min-height: 640px;
+    }
+
+    .ledger-head {
+      padding-bottom: 0.95rem;
+      margin-bottom: 1rem;
+      border-bottom: 4px double rgba(215,173,85,0.26);
+    }
+
+    .ledger-head span {
+      color: #ffd98d;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .ledger-head h3 {
+      margin: 0.45rem 0 0;
+      color: #fff3c5;
+      font-size: clamp(1.65rem, 3vw, 2.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+    }
+
+    .mirror-account {
+      display: none;
+      color: rgba(247,237,207,0.74);
+    }
+
+    .mirror-account.active {
+      display: block;
+      animation: accountFade 320ms ease;
+    }
+
+    @keyframes accountFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .account-rubric {
+      display: inline-flex;
+      margin-bottom: 0.72rem;
+      padding: 0.34rem 0.52rem;
+      color: #ffe0a2;
+      border: 1px solid rgba(215,173,85,0.28);
+      background: rgba(142,31,26,0.2);
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .mirror-account h4 {
+      margin: 0 0 0.8rem;
+      color: #fff6cd;
+      font-size: clamp(1.8rem, 3.6vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+    }
+
+    .account-body {
+      padding: 1rem;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(255,248,224,0.96), rgba(223,196,136,0.94)),
+        repeating-linear-gradient(0deg, rgba(33,22,15,0.035) 0 1px, transparent 1px 18px);
+      border: 1px solid rgba(51,29,15,0.5);
+      border-radius: 0.64rem;
+      box-shadow: inset 0 0 44px rgba(92,50,19,0.12);
+    }
+
+    .account-body p {
+      margin: 0 0 0.85rem;
+      color: rgba(33,22,15,0.84);
+      line-height: 1.62;
+      font-size: 0.98rem;
+    }
+
+    .account-body p:last-child { margin-bottom: 0; }
+
+    .account-seal {
+      display: inline-flex;
+      margin-top: 0.85rem;
+      padding: 0.38rem 0.54rem;
+      color: var(--red-dark);
+      border: 2px solid rgba(142,31,26,0.42);
+      border-radius: 0.24rem;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transform: rotate(-0.8deg);
+    }
+
+
+    @media (max-width: 1030px) {
+      .mirror-ring-shell { grid-template-columns: 1fr; }
+      .mirror-stage { min-height: 600px; }
+      .mirror-ledger { min-height: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .mirror-stage {
+        min-height: auto;
+        padding: 1rem 0.8rem 6rem;
+      }
+
+      .mirror-center {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: min(100%, 220px);
+        margin: 0 auto 1rem;
+      }
+
+      .mirror-track {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        perspective: none;
+      }
+
+      .mirror-card {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 100%;
+        min-height: 0;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+      }
+
+      .mirror-face { min-height: 170px; border-radius: 1rem; }
+      .mirror-face::before { border-radius: 0.72rem; }
+      .mirror-controls { left: 0.8rem; right: 0.8rem; bottom: 1rem; }
+      .mirror-control { flex: 1 1 44%; }
+      .account-body { padding: 0.85rem; }
+      .account-body p { font-size: 0.94rem; }
+    }
+
     @media (max-width: 1030px) {
       .hero-grid,
       .front-grid,
@@ -1175,6 +1539,236 @@
         scroll-behavior: auto !important;
       }
     }
+  
+
+    /* V5 Arcane Mirror Catalog Carousel */
+    .mirror-ring-shell {
+      grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+      gap: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    .mirror-stage {
+      min-height: 690px;
+      isolation: isolate;
+      overflow: hidden;
+      outline: none;
+    }
+
+    .mirror-stage:focus-visible {
+      box-shadow:
+        0 24px 70px rgba(0,0,0,0.42),
+        inset 0 0 50px rgba(215,173,85,0.04),
+        0 0 0 3px rgba(155,232,255,0.28);
+    }
+
+    .mirror-stage::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 51%;
+      width: min(80%, 610px);
+      height: 46%;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(215,173,85,0.18);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 34px rgba(155,232,255,0.06),
+        0 0 42px rgba(215,173,85,0.08);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .mirror-center {
+      top: 47%;
+      width: min(42vw, 185px);
+      opacity: 0.86;
+      z-index: 2;
+    }
+
+    .mirror-track {
+      z-index: 4;
+    }
+
+    .mirror-card {
+      width: min(44vw, 335px);
+      min-height: 320px;
+      transform-origin: center center;
+      will-change: transform, opacity, filter;
+    }
+
+    .mirror-card:focus-visible {
+      outline: none;
+    }
+
+    .mirror-card:focus-visible .mirror-face {
+      box-shadow:
+        0 20px 55px rgba(0,0,0,0.56),
+        0 0 0 3px rgba(155,232,255,0.28),
+        0 0 42px rgba(215,173,85,0.28),
+        inset 0 0 28px rgba(255,255,255,0.26);
+    }
+
+    .mirror-face {
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.08rem;
+      border-width: 5px;
+      border-radius: 48% 48% 1rem 1rem / 25% 25% 1rem 1rem;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.82), rgba(155,232,255,0.48) 0 28%, transparent 29%),
+        radial-gradient(circle at 50% 28%, rgba(255,255,255,0.42), transparent 7rem),
+        linear-gradient(180deg, rgba(75,126,142,0.72), rgba(18,25,38,0.96) 46%, rgba(16,10,13,0.97) 100%);
+    }
+
+    .mirror-face::before {
+      border-radius: 46% 46% 0.72rem 0.72rem / 23% 23% 0.72rem 0.72rem;
+    }
+
+    .mirror-face h3 {
+      font-size: clamp(1.22rem, 2.2vw, 1.55rem);
+    }
+
+    .mirror-face p {
+      font-size: 0.92rem;
+    }
+
+    .mirror-card[aria-selected="true"] .mirror-face {
+      border-color: rgba(255,232,174,0.98);
+      box-shadow:
+        0 24px 70px rgba(0,0,0,0.64),
+        0 0 42px rgba(215,173,85,0.32),
+        0 0 85px rgba(155,232,255,0.2),
+        inset 0 0 34px rgba(255,255,255,0.28);
+    }
+
+    .mirror-card[aria-selected="true"] .mirror-face::after {
+      color: rgba(247,237,207,0.13);
+    }
+
+    .mirror-controls {
+      bottom: 1rem;
+      align-items: center;
+    }
+
+    .mirror-control {
+      min-width: 158px;
+    }
+
+    .mirror-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 4.7rem;
+      z-index: 13;
+      display: flex;
+      justify-content: center;
+      gap: 0.42rem;
+      transform: translateX(-50%);
+      padding: 0.42rem 0.55rem;
+      border: 1px solid rgba(215,173,85,0.18);
+      border-radius: 999px;
+      background: rgba(5,4,7,0.44);
+      backdrop-filter: blur(10px);
+    }
+
+    .mirror-dot {
+      width: 12px;
+      height: 12px;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(247,237,207,0.38);
+      background: rgba(247,237,207,0.18);
+      cursor: pointer;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+    }
+
+    .mirror-dot.active {
+      background: rgba(255,225,155,0.96);
+      border-color: rgba(255,247,215,0.9);
+      box-shadow: 0 0 15px rgba(215,173,85,0.55);
+    }
+
+    .mirror-ledger {
+      min-height: 690px;
+      max-height: 690px;
+      overflow: auto;
+      scrollbar-color: rgba(215,173,85,0.45) rgba(5,4,7,0.28);
+    }
+
+    .mirror-ledger::-webkit-scrollbar { width: 10px; }
+    .mirror-ledger::-webkit-scrollbar-track { background: rgba(5,4,7,0.28); }
+    .mirror-ledger::-webkit-scrollbar-thumb { background: rgba(215,173,85,0.45); border-radius: 999px; }
+
+    .mirror-account.active {
+      animation: accountFade 360ms ease;
+    }
+
+    @media (max-width: 1030px) {
+      .mirror-ring-shell { grid-template-columns: 1fr; }
+      .mirror-stage { min-height: 650px; }
+      .mirror-ledger { min-height: auto; max-height: none; }
+      .mirror-card { width: min(58vw, 340px); }
+    }
+
+    @media (max-width: 760px) {
+      .mirror-stage {
+        min-height: 570px;
+        padding: 0.75rem;
+      }
+
+      .mirror-stage::after {
+        width: 92%;
+        height: 34%;
+        top: 47%;
+      }
+
+      .mirror-center {
+        width: 138px;
+        top: 44%;
+      }
+
+      .mirror-center span {
+        font-size: 0.75rem;
+      }
+
+      .mirror-card {
+        position: absolute;
+        width: min(82vw, 318px);
+        min-height: 300px;
+        top: 45%;
+      }
+
+      .mirror-face {
+        min-height: 300px;
+        border-radius: 48% 48% 1rem 1rem / 23% 23% 1rem 1rem;
+      }
+
+      .mirror-controls {
+        left: 0.65rem;
+        right: 0.65rem;
+        bottom: 0.85rem;
+        gap: 0.45rem;
+      }
+
+      .mirror-control {
+        flex: 1 1 calc(50% - 0.45rem);
+        min-width: 0;
+        min-height: 40px;
+        padding: 0.62rem 0.5rem;
+        font-size: 0.64rem;
+      }
+
+      #mirrorPause {
+        flex-basis: 100%;
+        order: 3;
+      }
+
+      .mirror-dots {
+        bottom: 7.15rem;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1266,40 +1860,131 @@
     <section id="front-page">
       <div class="page">
         <div class="section-head">
-          <span class="section-label">Front Page</span>
-          <h2>Reports that appear only after the ink is warmed by spell-light.</h2>
-          <p>Written as a frontier broadsheet, corrected by rumor, and filed by whatever the Orb catches between the road, the inn, and the sky.</p>
+          <span class="section-label">The Turning Mirror-Ring</span>
+          <h2>Headlines circle the Orb in glass, gold, and dangerous memory.</h2>
+          <p>The mirrors pass one before another like guarded wares in a spellbound gallery. Set one before the Orb, and its full account unfolds in the ledger beside it.</p>
         </div>
 
-        <div class="front-grid">
-          <article class="lead-story">
-            <div class="lead-art" aria-hidden="true"></div>
-            <span class="story-rubric">Regional Menace</span>
-            <h3>White Terror Still Haunts the Skies Above Phandalin</h3>
-            <p>Travelers speak of sudden cold, scattered livestock, and the great pale shape of Cryovain crossing the clouds. The company’s return from Umbrage Hill has ended debate over whether the dragon is real; the new question is how close it will come next.</p>
-            <p class="byline">Filed from overheard accounts at Stonehill Inn</p>
-          </article>
+        <div class="mirror-ring-shell">
+          <div class="mirror-stage" id="mirrorStage" tabindex="0" aria-label="Turning magical mirror ring">
+            <div class="mirror-center" aria-hidden="true">
+              <div><strong>Orb Focus</strong><span>Six accounts currently burn bright enough to turn the glass.</span></div>
+            </div>
 
-          <div class="story-stack">
-            <article class="secret-card" data-mark="N">
-              <time>Stonehill Inn · Night report</time>
-              <h3>Bounty Hunters Strike; Foreign Plot Suspected</h3>
-              <p>Steel was drawn in the inn after hunters came looking for Noctara alive. The attack has pushed private fear into public conversation.</p>
+            <div class="mirror-track" id="mirrorTrack">
+              <button class="mirror-card" type="button" data-story="cryovain" aria-selected="true">
+                <div class="mirror-face" data-gleam="❄"><span class="mirror-tag">Regional Menace</span><h3>White Terror Still Haunts the Skies Above Phandalin</h3><p>Cold wind, pale wings, and shaken witnesses turn one rumor into a town’s shared fear.</p></div>
+              </button>
+              <button class="mirror-card" type="button" data-story="bounty" aria-selected="false">
+                <div class="mirror-face" data-gleam="✦"><span class="mirror-tag">Stonehill Inn</span><h3>Bounty Hunters Strike; Foreign Plot Suspected</h3><p>Steel flashes in the night, and Noctara’s name draws a distant shadow toward town.</p></div>
+              </button>
+              <button class="mirror-card" type="button" data-story="manticore" aria-selected="false">
+                <div class="mirror-face" data-gleam="☉"><span class="mirror-tag">Umbrage Hill</span><h3>Manticore Slain Near Adabra’s Windmill</h3><p>The healer remains where fear says she should not, and the hill earns another story.</p></div>
+              </button>
+              <button class="mirror-card" type="button" data-story="mimic" aria-selected="false">
+                <div class="mirror-face" data-gleam="◇"><span class="mirror-tag">Gnomengarde</span><h3>Shapechanging Menace Exposed in Gnomish Halls</h3><p>Royal panic, hidden teeth, and gnomish celebration now share the same strange page.</p></div>
+              </button>
+              <button class="mirror-card" type="button" data-story="woods" aria-selected="false">
+                <div class="mirror-face" data-gleam="♧"><span class="mirror-tag">Woodland Road</span><h3>Woodland Omens Turn Hostile Near Logger Roads</h3><p>The trees do not merely watch; something inside them has begun answering back.</p></div>
+              </button>
+              <button class="mirror-card" type="button" data-story="zariel" aria-selected="false">
+                <div class="mirror-face" data-gleam="☾"><span class="mirror-tag">Morning After</span><h3>Zariel Arrives with the Captured Hunter</h3><p>A wolf’s trail, a fleeing man, and a new companion enter Phandalin’s growing account.</p></div>
+              </button>
+            </div>
+
+            <div class="mirror-controls" aria-label="Mirror ring controls">
+              <button class="mirror-control" type="button" id="mirrorPrev">Previous Reflection</button>
+              <button class="mirror-control" type="button" id="mirrorPause" aria-pressed="false">Still the Glass</button>
+              <button class="mirror-control" type="button" id="mirrorNext">Next Reflection</button>
+            </div>
+            <div class="mirror-dots" id="mirrorDots" aria-label="Choose a reflected account"></div>
+          </div>
+
+          <div class="mirror-ledger panel" id="mirrorLedger">
+            <div class="ledger-head"><span>Full Account Now Reflected</span><h3 id="ledgerTitle">White Terror Still Haunts the Skies Above Phandalin</h3></div>
+
+            <article class="mirror-account active" data-account="cryovain" data-title="White Terror Still Haunts the Skies Above Phandalin">
+              <span class="account-rubric">Regional Menace · Filed from chilled testimony</span>
+              <h4>White Terror Still Haunts the Skies Above Phandalin</h4>
+              <div class="account-body">
+                <p>The first witnesses spoke softly enough that some dismissed them as road-shaken liars: a white shape above the clouds, a breath of winter on a warm day, livestock scattered as though thunder had grown claws. Such tales are common wherever taverns stand near dangerous roads. Yet the company’s return from Umbrage Hill has ended the comfortable habit of disbelief.</p>
+                <p>They came back bearing the signs no sensible person invents. Cloaks stiffened with frost. Faces marked by cold-burn. Eyes turned too often toward open sky. The name now spoken over mugs and behind shuttered windows is Cryovain, and each repetition seems to lower the room’s temperature.</p>
+                <p>Those near Adabra Gwynn’s lonely windmill describe a pale dragon stooping through cloud, its wings cutting the day into terror and shadow. One account claims even the manticore harassing the hill struck at the dragon before turning its fury elsewhere. Another insists the dragon’s passing silenced every bird at once. The Orb cannot swear to either detail, but both have the shape of true fear.</p>
+                <p>Townmaster’s Hall offers no comfort beyond locked doors and reward notices. Travelers are advised to keep tree lines, low ground, and stone cover within sight. Merchants now look at the sky before counting coin. Children have begun drawing white wings in hearth ash. Phandalin has survived orcs, ruins, and hungry things before, but a dragon changes the size of every question.</p>
+                <p>If the beast has chosen Icespire Peak as its crown, then the frontier now lives beneath a throne of snow. The roads remain open, but no road is empty. Every cartwheel creak, every sudden wind, every cloud too bright against the sun now carries the same whispered question: how close will Cryovain come next?</p>
+                <span class="account-seal">Sealed by cold light</span>
+              </div>
             </article>
-            <article class="secret-card" data-mark="U">
-              <time>Umbrage Hill · Witness account</time>
-              <h3>Manticore Slain Near Adabra’s Windmill</h3>
-              <p>The healer remains at her post despite monster and dragon trouble. Some call that courage. Others call it the frontier’s particular madness.</p>
+
+            <article class="mirror-account" data-account="bounty" data-title="Bounty Hunters Strike; Foreign Plot Suspected">
+              <span class="account-rubric">Stonehill Inn · Night report copied before dawn</span>
+              <h4>Bounty Hunters Strike; Foreign Plot Suspected</h4>
+              <div class="account-body">
+                <p>Stonehill Inn has long been the sort of place where fear pauses at the door, shakes mud from its boots, and pretends to be ordinary road fatigue. That comfort broke in the night when armed strangers came looking for Noctara.</p>
+                <p>The attack was not the work of drunk blades or desperate thieves. The hunters carried purpose. They wanted her alive. That single fact has done more to unsettle Phandalin than the bodies themselves. A dead enemy is simple. A living captive suggests payment, questioning, transport, and a distant hand waiting to close.</p>
+                <p>By morning, the inn had become a room of lowered voices. Toblen Stonehill moved through the common room with the weary anger of a man measuring every window and wondering what kind of lock keeps out politics. The company had already returned battered by frost and road danger. Now danger had crossed the threshold and found them in their beds.</p>
+                <p>The captured hunter’s words, gathered through trembling confession and sharper interrogation, point toward the hidden city called Vael Turog and the name Duke Malrec Voss. Whether every syllable is truth or cowardice wrapped in truth remains for wiser souls to determine. Yet the bounty’s shape is clear enough: Noctara is wanted, not merely hated.</p>
+                <p>There are whispers of a directorate that buys knives, of soldiers who serve a distant throne, and of old wards that steal memory from those who leave the city too long. These matters belong in locked rooms and behind warded doors, but Phandalin is small. Secrets brought here bleed through floorboards.</p>
+                <p>Halia Thornton has been seen listening more than speaking. Harbin Wester is said to be deeply disturbed that such hunters found their way into town at all. The Orb records this plainly: whatever hunts Noctara has learned the road to Phandalin, and the next offer of coin may already be traveling west.</p>
+                <span class="account-seal">Copied under barred windows</span>
+              </div>
             </article>
-            <article class="secret-card" data-mark="G">
-              <time>Gnomengarde · Sanitized royal bulletin</time>
-              <h3>Shapechanging Menace Exposed in Gnomish Halls</h3>
-              <p>Official statements are cheerful, contradictory, and full of inventions. The practical result is clear: the mimic is dead and the kings endured.</p>
+
+            <article class="mirror-account" data-account="manticore" data-title="Manticore Slain Near Adabra’s Windmill">
+              <span class="account-rubric">Umbrage Hill · Witness account and hill rumor</span>
+              <h4>Manticore Slain Near Adabra’s Windmill</h4>
+              <div class="account-body">
+                <p>Adabra Gwynn’s windmill stands where sensible walls do not: exposed, stubborn, and visible from far enough away for fear to make plans before arrival. It has become one of those frontier places where everyone agrees a person should leave, and everyone knows the person will not.</p>
+                <p>The creature harassing the hill was no ordinary beast. The manticore came hungry, winged, and loud with the arrogance of something used to frightening smaller lives into surrender. It found, instead, a company already walking through a day thick with danger.</p>
+                <p>Accounts differ in the order of events because terror rarely keeps tidy minutes. Some say the white dragon appeared first, a pale horror crossing the sky and drawing the manticore’s fury. Others say the manticore’s threat to the windmill had already become urgent when the shadow passed overhead. All agree that the hill briefly belonged to too many monsters at once.</p>
+                <p>The company fought. Steel, spell, tooth, claw, and desperate timing turned what might have been a funeral into another tale told loudly at Stonehill Inn. By the end, the manticore lay dead, and Adabra remained alive inside the very windmill everyone keeps advising her to abandon.</p>
+                <p>There is local disagreement on what this proves. Some call Adabra brave. Some call her impossible. Some say the company’s arrival was luck, and others answer that luck tends to follow those willing to stand between a healer and a monster.</p>
+                <p>The Orb offers this judgment: Umbrage Hill is no longer merely a lonely rise with a windmill. It is a place where the frontier showed its teeth from land and sky at once, and where the company began to understand that the dragon is not waiting politely at the end of the road. It is already part of the weather.</p>
+                <span class="account-seal">Pressed with windmill dust</span>
+              </div>
             </article>
-            <article class="secret-card" data-mark="W">
-              <time>Neverwinter Wood · Road whisper</time>
-              <h3>Woodland Omens Turn Hostile Near Logger Roads</h3>
-              <p>There is more than ordinary wilderness risk near the trees now. The Orb advises carts, horses, and heroes to expect watched paths.</p>
+
+            <article class="mirror-account" data-account="mimic" data-title="Shapechanging Menace Exposed in Gnomish Halls">
+              <span class="account-rubric">Gnomengarde · Sanitized royal bulletin with stains beneath</span>
+              <h4>Shapechanging Menace Exposed in Gnomish Halls</h4>
+              <div class="account-body">
+                <p>Any report out of Gnomengarde must first survive invention, optimism, frightened royalty, and at least three devices nobody should have wound. The Orb therefore presents the following account with appropriate caution and a respect for gnomish enthusiasm.</p>
+                <p>The settlement had fallen into suspicion after disappearances, strange signs, and royal panic turned ordinary confusion into a locked-room dread. King Korboz and King Gnerkli, whose authority survived mostly by being defended from inside their own chambers, required proof that the unseen menace had been ended.</p>
+                <p>The company found the thing where a careless eye might have found nothing at all. Disguised as the back wall of a chamber, the creature waited in plain sight with the patience of furniture and the appetite of a predator. A mimic is a lesson in distrust: not every wall is a wall, not every chest is a chest, and not every silence is empty.</p>
+                <p>The fight was close enough that those retelling it have already begun polishing the danger into legend. What matters is simpler. The mimic died. Vimak kept a trophy from it. The kings were convinced. Gnomengarde, which had held its breath through fear and contraption alike, exhaled into celebration.</p>
+                <p>Official gnomish statements describe the resolution as orderly, triumphant, and evidence of excellent institutional preparedness. Less official versions include random crossbow fire, secret routes, royal anxiety, and at least one person insisting the back wall looked suspicious only after it tried to eat someone.</p>
+                <p>Let scholars argue what such a creature wanted in those halls. Let inventors insist everything functioned as designed. The Orb records the practical truth: the company entered a place of hidden teeth, found the lie wearing stone as a face, and left behind a settlement loud enough to be grateful.</p>
+                <span class="account-seal">Stamped after celebration</span>
+              </div>
+            </article>
+
+            <article class="mirror-account" data-account="woods" data-title="Woodland Omens Turn Hostile Near Logger Roads">
+              <span class="account-rubric">Neverwinter Wood · Road whisper and river warning</span>
+              <h4>Woodland Omens Turn Hostile Near Logger Roads</h4>
+              <div class="account-body">
+                <p>The roads near Neverwinter Wood have always had their own manners. Branches lean too close. Birds stop singing for reasons no traveler likes. Even horses with strong backs and empty heads understand that some tree lines are better passed before dusk.</p>
+                <p>Recent signs are less ordinary. The trouble near the logger roads does not feel like wolves, weather, or the common cruelty of wild ground. It feels watched. It feels answered. It feels as though the woods have taken offense and found hands willing to carry that offense into the open.</p>
+                <p>Loggers whisper of unease around camp and movement where no hired guard stood. The company’s path brought them close enough to disturb whatever temper has been gathering beneath the boughs. One account speaks of a boar that was not merely a boar, another of pain striking the mind before the creature fled to warn deeper powers. The Orb keeps such details marked in red until further signs confirm them.</p>
+                <p>The name spoken by those with old knowledge is anchorite: servants of storm, fang, and woodland wrath. Whether these figures act from their own hatred, from obedience to a greater power, or from some bargain rooted in Neverwinter Wood, the effect is the same. The routes once treated as inconvenient are becoming hostile.</p>
+                <p>Beaver and Badger, the friendly and notably wind-troubled horses seen drawing the company’s cart, may know more about the way home than certain travelers. Those who can speak with beasts are advised to listen when beasts prefer a road, refuse a road, or stare too long between trees.</p>
+                <p>The dragon owns the sky, but the woods own the spaces where wings cannot reach. Phandalin must now reckon with both. A frontier can endure one great threat if it knows where to face. It grows harder when danger learns to arrive from above, behind, and beneath the leaves.</p>
+                <span class="account-seal">Tied with green-black thread</span>
+              </div>
+            </article>
+
+            <article class="mirror-account" data-account="zariel" data-title="Zariel Arrives with the Captured Hunter">
+              <span class="account-rubric">Morning After · Account from the inn doors</span>
+              <h4>Zariel Arrives with the Captured Hunter</h4>
+              <div class="account-body">
+                <p>Morning at Stonehill Inn should have smelled of bread, smoke, spilled ale, and the ordinary relief of having survived one more night. Instead it carried the sour edge of blood cleaned too quickly and questions nobody had finished asking.</p>
+                <p>Then Zariel arrived.</p>
+                <p>Those who saw her enter describe a figure marked by the road, accompanied by the presence of a wolf and the practical silence of someone who has already done the hard part before breakfast. With her came the hunter who had fled the night’s violence, no longer running, no longer boasting, and very much alive.</p>
+                <p>The trail had begun in the confusion after the attack. While Phandalin slept poorly and the inn tried to understand what had happened inside its own walls, Zariel followed the shape of escape: disturbed ground, hurried passage, the faint cowardice of a man who thought distance could become mercy. Her wolf helped close the night around him.</p>
+                <p>The fight, by all accounts, was brief. The hunter was taken alive, which is more consideration than his employer’s coin deserved. Dragged or driven back toward town, he became the morning’s most unwelcome proof that the attack was not random. A dead man leaves questions. A prisoner leaves answers, excuses, and fear.</p>
+                <p>In the common room, the company gained more than a captive. They gained a new presence beside them, one whose arrival tied the previous night’s violence to the road beyond town. Zariel did not enter as rumor. She entered with evidence.</p>
+                <p>Phandalin has a habit of measuring people by what follows them through the door. Some bring mud. Some bring debts. Zariel brought back the man who ran, and with him another piece of the shadow reaching for Noctara. The Orb marks her name among the company’s six.</p>
+                <span class="account-seal">Witnessed before breakfast</span>
+              </div>
             </article>
           </div>
         </div>
@@ -1348,7 +2033,7 @@
           <div class="sky-map panel" aria-label="Faerûn-inspired constellation chart">
             <svg viewBox="0 0 680 420" role="img" aria-labelledby="skyTitle skyDesc">
               <title id="skyTitle">Orb star chart</title>
-              <desc id="skyDesc">Decorative constellation chart with Tears of Selune, the Centaur, and Sword and Dagger labels.</desc>
+              <desc id="skyDesc">The Orb marks Tears of Selûne, the Centaur, Sword and Dagger, and a nameless ill crossing.</desc>
               <circle cx="86" cy="72" r="3"/><circle cx="134" cy="96" r="2.4"/><circle cx="181" cy="65" r="2.8"/><circle cx="234" cy="108" r="2.3"/><circle cx="292" cy="84" r="3.1"/>
               <line x1="86" y1="72" x2="134" y2="96"/><line x1="134" y1="96" x2="181" y2="65"/><line x1="181" y1="65" x2="234" y2="108"/><line x1="234" y1="108" x2="292" y2="84"/>
               <text x="62" y="40">Tears of Selûne</text>
@@ -1437,10 +2122,186 @@
       </div>
       <div class="footer-links">
         <a href="#top">Return to Orb</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Seal</a>
+        <a href="terms.html">Terms of Passage</a>
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const cards = Array.from(document.querySelectorAll(".mirror-card"));
+      const accounts = Array.from(document.querySelectorAll(".mirror-account"));
+      const title = document.getElementById("ledgerTitle");
+      const prev = document.getElementById("mirrorPrev");
+      const next = document.getElementById("mirrorNext");
+      const pause = document.getElementById("mirrorPause");
+      const stage = document.getElementById("mirrorStage");
+      const dotsWrap = document.getElementById("mirrorDots");
+      let activeIndex = 0;
+      let timer = null;
+      let glassStilled = false;
+      let pointerStart = null;
+
+      function wrappedOffset(index) {
+        const total = cards.length;
+        let offset = index - activeIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+        return offset;
+      }
+
+      function placeCard(card, offset) {
+        const mobile = window.matchMedia("(max-width: 760px)").matches;
+        const small = window.matchMedia("(max-width: 1030px)").matches;
+        const abs = Math.abs(offset);
+        const direction = offset < 0 ? -1 : 1;
+
+        let x = 0;
+        let y = 0;
+        let scale = 1;
+        let rotate = 0;
+        let opacity = 1;
+        let blur = 0;
+        let z = 80;
+        let pointer = "auto";
+
+        if (mobile) {
+          if (offset === 0) {
+            x = 0; y = -2; scale = 1; opacity = 1; z = 80; rotate = 0;
+          } else if (abs === 1) {
+            x = direction * 92; y = 14; scale = 0.82; opacity = 0.34; z = 32; rotate = direction * -10; blur = 0.8;
+          } else {
+            x = direction * 126; y = 30; scale = 0.7; opacity = 0; z = 5; rotate = direction * -18; blur = 2.2; pointer = "none";
+          }
+          card.style.transform = `translate(-50%, -50%) translate(${x}vw, ${y}px) scale(${scale}) rotateY(${rotate}deg)`;
+        } else {
+          const sideOne = small ? 245 : 285;
+          const sideTwo = small ? 405 : 485;
+          if (offset === 0) {
+            x = 0; y = 8; scale = 1; opacity = 1; z = 90; rotate = 0;
+          } else if (abs === 1) {
+            x = direction * sideOne; y = 18; scale = 0.82; opacity = 0.86; z = 58; rotate = direction * -20; blur = 0.25;
+          } else if (abs === 2) {
+            x = direction * sideTwo; y = 48; scale = 0.62; opacity = 0.42; z = 28; rotate = direction * -32; blur = 1.2;
+          } else {
+            x = 0; y = -116; scale = 0.52; opacity = 0.16; z = 6; rotate = 0; blur = 2.4; pointer = "none";
+          }
+          card.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale}) rotateY(${rotate}deg)`;
+        }
+
+        card.style.opacity = String(opacity);
+        card.style.filter = `blur(${blur}px)`;
+        card.style.zIndex = String(z);
+        card.style.pointerEvents = pointer;
+      }
+
+      function arrange() {
+        cards.forEach((card, index) => {
+          placeCard(card, wrappedOffset(index));
+        });
+      }
+
+      function updateDots() {
+        const dots = Array.from(document.querySelectorAll(".mirror-dot"));
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === activeIndex);
+          dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
+        });
+      }
+
+      function showStory(index) {
+        activeIndex = (index + cards.length) % cards.length;
+        const key = cards[activeIndex].dataset.story;
+        cards.forEach((card, i) => {
+          const active = i === activeIndex;
+          card.setAttribute("aria-selected", active ? "true" : "false");
+          card.setAttribute("tabindex", active || Math.abs(wrappedOffset(i)) === 1 ? "0" : "-1");
+        });
+        accounts.forEach(account => {
+          const active = account.dataset.account === key;
+          account.classList.toggle("active", active);
+          if (active && title) title.textContent = account.dataset.title;
+        });
+        updateDots();
+        arrange();
+      }
+
+      function startTurning() {
+        if (glassStilled || timer) return;
+        timer = window.setInterval(() => showStory(activeIndex + 1), 9000);
+      }
+
+      function stopTurning() {
+        if (!timer) return;
+        window.clearInterval(timer);
+        timer = null;
+      }
+
+      function setStilled(value) {
+        glassStilled = value;
+        if (pause) {
+          pause.setAttribute("aria-pressed", glassStilled ? "true" : "false");
+          pause.textContent = glassStilled ? "Let the Glass Turn" : "Still the Glass";
+        }
+        if (glassStilled) stopTurning();
+        else startTurning();
+      }
+
+      if (dotsWrap) {
+        cards.forEach((card, index) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "mirror-dot";
+          dot.setAttribute("aria-label", card.querySelector("h3")?.textContent || `Reflection ${index + 1}`);
+          dot.addEventListener("click", () => {
+            showStory(index);
+            stopTurning();
+            startTurning();
+          });
+          dotsWrap.appendChild(dot);
+        });
+      }
+
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+          showStory(index);
+          stopTurning();
+          startTurning();
+        });
+        card.addEventListener("focus", () => showStory(index));
+      });
+
+      if (prev) prev.addEventListener("click", () => { showStory(activeIndex - 1); stopTurning(); startTurning(); });
+      if (next) next.addEventListener("click", () => { showStory(activeIndex + 1); stopTurning(); startTurning(); });
+      if (pause) pause.addEventListener("click", () => setStilled(!glassStilled));
+
+      if (stage) {
+        stage.addEventListener("keydown", event => {
+          if (event.key === "ArrowLeft") { event.preventDefault(); showStory(activeIndex - 1); }
+          if (event.key === "ArrowRight") { event.preventDefault(); showStory(activeIndex + 1); }
+        });
+        stage.addEventListener("mouseenter", stopTurning);
+        stage.addEventListener("mouseleave", startTurning);
+        stage.addEventListener("focusin", stopTurning);
+        stage.addEventListener("focusout", startTurning);
+        stage.addEventListener("pointerdown", event => { pointerStart = event.clientX; });
+        stage.addEventListener("pointerup", event => {
+          if (pointerStart === null) return;
+          const delta = event.clientX - pointerStart;
+          pointerStart = null;
+          if (Math.abs(delta) < 48) return;
+          showStory(delta > 0 ? activeIndex - 1 : activeIndex + 1);
+          stopTurning();
+          startTurning();
+        });
+      }
+
+      window.addEventListener("resize", arrange);
+      showStory(0);
+      startTurning();
+    }());
+  </script>
+
 </body>
 </html>
